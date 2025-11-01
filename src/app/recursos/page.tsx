@@ -6,7 +6,7 @@ import HeroPage from "@/components/HeroPage";
 import { FolderCode } from "lucide-react";
 import { motion as m } from "framer-motion";
 import { RecursosCards } from "@/components/RecursosCards";
-import { Recurso } from "@/sanity/types/recursos";
+import { Recurso } from "@/types/recursos";
 import { useEffect, useState } from "react";
 
 export default function RecursosPage() {

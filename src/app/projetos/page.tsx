@@ -11,25 +11,9 @@ import { motion as m } from "framer-motion";
 import HeroPage from "@/components/HeroPage";
 import { BriefcaseIcon } from "lucide-react";
 import SectionContact from "@/components/SectionContact";
+import {Category, Project  } from "../../types/project";
+import { CATEGORIES_QUERY, PROJECTS_QUERY } from "../../sanity/queries/getProjects";
 
-interface Project {
-  _id: string;
-  title: string;
-  slug: {
-    current: string;
-    _type?: string;
-  };
-  mainImage?: any;
-  categories?: Array<{ title: string; slug: { current: string } }> | string[];
-  body?: any;
-  linkDemo?: string;
-  linkGithub?: string;
-  publishedAt?: string;
-}
-interface Category {
-  _id: string;
-  title: string;
-}
 
 const PROJECTS_PER_PAGE = 9;
 
@@ -46,26 +30,6 @@ export default function PortfolioPage() {
 
   const observer = useRef<IntersectionObserver | null>(null);
   const ref = useRef(null);
-
-  const PROJECTS_QUERY = `*[_type == "project"] | order(publishedAt desc){
-    _id,
-    title,
-    slug,
-    mainImage,
-    categories[]->{
-      title,
-      slug
-    },
-    body,
-    linkDemo,
-    linkGithub,
-    publishedAt
-  }`;
-
-  const CATEGORIES_QUERY = `*[_type == "category"]{
-    _id,
-    title
-  }|order(title asc)`;
 
   // fetch inicial
   useEffect(() => {

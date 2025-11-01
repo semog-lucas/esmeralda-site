@@ -7,78 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
 import { Calendar, User, ArrowLeft } from "lucide-react";
+import { POST_QUERY, RELATED_POSTS_QUERY, POST_METADATA_QUERY, RECENT_POSTS_QUERY } from "@/sanity/queries/postQueries";
 
-// Query do post principal para metadata
-const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][0]{
-  title,
-  excerpt,
-  mainImage,
-  publishedAt,
-  "slug": slug.current,
-  author->{name},
-  categories[]->{
-    title
-  }
-}`;
 
-// Query do post principal completo
-const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
-  _id,
-  title,
-  slug,
-  publishedAt,
-  mainImage,
-  body,
-  excerpt,
-  author->{name},
-  categories[]->{
-    title,
-    slug
-  }
-}`;
-
-// Query para posts relacionados
-const RELATED_POSTS_QUERY = `*[
-  _type == "post" 
-  && slug.current != $currentSlug
-  && count(categories[@._ref in ^.^.categories[]._ref]) > 0
-] | order(publishedAt desc)[0...3]{
-  _id, 
-  title, 
-  slug, 
-  categories[]->{
-    title,
-    slug
-  },
-  publishedAt,
-  mainImage,
-  excerpt,
-  author->{
-    name,
-    image
-  }
-}`;
-
-// Query de fallback para posts recentes
-const RECENT_POSTS_QUERY = `*[
-  _type == "post" 
-  && slug.current != $currentSlug
-] | order(publishedAt desc)[0...3]{
-  _id, 
-  title, 
-  slug, 
-  categories[]->{
-    title,
-    slug
-  },
-  publishedAt,
-  mainImage,
-  excerpt,
-  author->{
-    name,
-    image
-  }
-}`;
 
 const { projectId, dataset } = client.config();
 

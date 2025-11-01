@@ -3,7 +3,7 @@
 
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/lib/client";
+import { client } from "@/lib/client";
 import { BlogCard } from "@/components/BlogCard";
 import { PostsGridSkeleton } from "@/components/Skeletons";
 import { Input } from "@/components/ui/input";

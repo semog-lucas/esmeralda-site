@@ -2,7 +2,7 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Link from "next/link";
-import { urlFor } from "@/sanity/lib/client";
+import { urlFor } from "@/lib/client";
 import Image from "next/image";
 
 interface Category {
