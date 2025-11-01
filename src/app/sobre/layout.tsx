@@ -1,0 +1,85 @@
+// app/sobre/layout.tsx
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sobre | Por trás do Código",
+  description: "Conheça a história por trás da Esmeralda - laboratório de consciência lógica. Descubra nossa missão, valores e jornada em tecnologia e inovação.",
+  keywords: [
+    "sobre esmeralda",
+    "história",
+    "missão", 
+    "valores",
+    "laboratório tecnológico",
+    "consciência lógica",
+    "desenvolvimento",
+    "inovação",
+    "tecnologia",
+    "portfolio"
+  ],
+  openGraph: {
+    title: "Sobre | Por trás do Código",
+    description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
+    url: "/sobre",
+    siteName: "Esmeralda",
+    locale: "pt_BR",
+    type: "website",
+    images: [
+      {
+        url: "/og-sobre.jpg", 
+        width: 1200,
+        height: 630,
+        alt: "Sobre  - Por trás do Código",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sobre | Por trás do Código",
+    description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
+    images: ["/og-sobre.jpg"],
+  },
+  alternates: {
+    canonical: "/sobre",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function AboutLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      {/* Structured Data para SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AboutPage",
+            "name": "Sobre a Esmeralda",
+            "description": "Laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.",
+            "url": "https://esmeraldacompany.com.br/sobre", 
+            "publisher": {
+              "@type": "Organization",
+              "name": "Esmeralda",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png" 
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage", 
+              "@id": "https://esmeralda.dev/sobre"
+            }
+          })
+        }}
+      />
+      {children}
+    </>
+  );
+}
