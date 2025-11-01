@@ -1,6 +1,15 @@
 // app/termos-e-condicoes/layout.tsx
 import type { Metadata } from "next";
 
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_KEYWORDS,
+  OPEN_GRAPH,
+  TWITTER,
+  ROBOTS_CONFIG
+} from "../constants";
+
 export const metadata: Metadata = {
   title: "Política de Privacidade | Esmeralda Company",
   description: "Conheça nossa Política de Privacidade. Saiba como a Esmeralda Company protege seus dados, utiliza cookies e garante sua segurança online. Última atualização: 4 de Outubro de 2025.",
@@ -14,18 +23,17 @@ export const metadata: Metadata = {
     "privacidade digital",
     "esmeralda company",
     "termos e condições",
-    "proteção de dados pessoais"
+    "proteção de dados pessoais",
+    ...SITE_KEYWORDS
   ],
   openGraph: {
+    ...OPEN_GRAPH,
     title: "Política de Privacidade | Esmeralda Company",
     description: "Política de Privacidade da Esmeralda Company - Proteção de dados, cookies e segurança online.",
-    url: "/termos-e-condicoes",
-    siteName: "Esmeralda Company",
-    locale: "pt_BR",
-    type: "website",
+    url: `${SITE_URL}/termos-e-condicoes`,
     images: [
       {
-        url: "/og-termos.jpg", // 👈 Você vai criar esta imagem
+        url: `${SITE_URL}/og-termos.jpg`,
         width: 1200,
         height: 630,
         alt: "Política de Privacidade - Esmeralda Company",
@@ -33,16 +41,18 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary",
+    ...TWITTER,
+    card: "summary" as const,
     title: "Política de Privacidade | Esmeralda Company",
     description: "Conheça nossa Política de Privacidade e Termos de Uso.",
+    images: [`${SITE_URL}/og-termos.jpg`],
   },
   alternates: {
-    canonical: "/termos-e-condicoes",
+    canonical: `${SITE_URL}/termos-e-condicoes`,
   },
   robots: {
-    index: true,
-    follow: false, // 👈 Páginas legais geralmente não são seguidas
+    ...ROBOTS_CONFIG,
+    follow: false, // Páginas de termos geralmente não devem ser seguidas
   },
 };
 

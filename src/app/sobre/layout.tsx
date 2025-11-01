@@ -1,8 +1,16 @@
 // app/sobre/layout.tsx
 import type { Metadata } from "next";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_KEYWORDS,
+  OPEN_GRAPH,
+  TWITTER,
+  ROBOTS_CONFIG
+} from "../constants";
 
 export const metadata: Metadata = {
-  title: "Sobre | Por trás do Código",
+  title: `Sobre | ${SITE_NAME}`,
   description: "Conheça a história por trás da Esmeralda - laboratório de consciência lógica. Descubra nossa missão, valores e jornada em tecnologia e inovação.",
   keywords: [
     "sobre esmeralda",
@@ -14,38 +22,35 @@ export const metadata: Metadata = {
     "desenvolvimento",
     "inovação",
     "tecnologia",
-    "portfolio"
+    "portfolio",
+    ...SITE_KEYWORDS
   ],
   openGraph: {
+    ...OPEN_GRAPH,
     title: "Sobre | Por trás do Código",
     description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
-    url: "/sobre",
-    siteName: "Esmeralda",
-    locale: "pt_BR",
-    type: "website",
+    url: `${SITE_URL}/sobre`,
     images: [
       {
-        url: "/og-sobre.jpg", 
+        url: `${SITE_URL}/og-sobre.jpg`,
         width: 1200,
         height: 630,
-        alt: "Sobre  - Por trás do Código",
+        alt: "Sobre Esmeralda - Por trás do Código",
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    ...TWITTER,
     title: "Sobre | Por trás do Código",
     description: "Conheça a história e missão da Esmeralda - laboratório de consciência lógica.",
-    images: ["/og-sobre.jpg"],
+    images: [`${SITE_URL}/og-sobre.jpg`],
   },
   alternates: {
-    canonical: "/sobre",
+    canonical: `${SITE_URL}/sobre`,
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: ROBOTS_CONFIG,
 };
+
 
 export default function AboutLayout({
   children,

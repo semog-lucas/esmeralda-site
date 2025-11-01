@@ -1,8 +1,15 @@
-// app/contato/layout.tsx
-import type { Metadata } from "next";
+import { Metadata } from "next";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_KEYWORDS,
+  OPEN_GRAPH,
+  TWITTER,
+  ROBOTS_CONFIG
+} from "../constants";
 
 export const metadata: Metadata = {
-  title: "Contato | Vamos Conversar",
+  title: `Contato | ${SITE_NAME}`,
   description: "Entre em contato com o laboratório Esmeralda. Estamos prontos para transformar suas ideias em soluções tecnológicas inovadoras.",
   keywords: [
     "contato",
@@ -14,18 +21,17 @@ export const metadata: Metadata = {
     "tecnologia",
     "inovação",
     "esmeralda contato",
-    "orçamento projeto"
+    "orçamento projeto",
+    ...SITE_KEYWORDS
   ],
   openGraph: {
+    ...OPEN_GRAPH,
     title: "Contato | Vamos Conversar",
     description: "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas inovadoras.",
-    url: "/contato",
-    siteName: "Esmeralda",
-    locale: "pt_BR",
-    type: "website",
+    url: `${SITE_URL}/contato`,
     images: [
       {
-        url: "/og-contato.jpg", 
+        url: `${SITE_URL}/og-contato.jpg`,
         width: 1200,
         height: 630,
         alt: "Contato Esmeralda - Vamos Conversar",
@@ -33,18 +39,15 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    ...TWITTER,
     title: "Contato | Esmeralda - Vamos Conversar",
     description: "Entre em contato com o laboratório Esmeralda para desenvolver soluções tecnológicas.",
-    images: ["/og-contato.jpg"],
+    images: [`${SITE_URL}/og-contato.jpg`],
   },
   alternates: {
-    canonical: "/contato",
+    canonical: `${SITE_URL}/contato`,
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: ROBOTS_CONFIG,
 };
 
 export default function ContactLayout({

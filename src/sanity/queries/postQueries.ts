@@ -49,3 +49,22 @@ export const RECENT_POSTS_QUERY = `*[
   excerpt,
   author->{name, image}
 }`;
+
+
+export const CATEGORIES_QUERY = `*[_type == "category"]{
+  _id,
+  title,
+  "slug": slug.current
+}`;
+
+// Ou, se você quiser uma query mais específica para posts:
+export const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
+  _id,
+  title,
+  "slug": slug.current,
+  publishedAt,
+  mainImage,
+  excerpt,
+  author->{name, image},
+  categories[]->{title, "slug": slug.current}
+}`;

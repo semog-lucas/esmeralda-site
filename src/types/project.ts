@@ -3,7 +3,10 @@
 export interface Category {
   _id: string;
   title: string;
-  slug?: string;
+  slug: {
+    current: string;
+    _type?: string;
+  };
 }
 
 export interface Project {
@@ -14,7 +17,7 @@ export interface Project {
     _type?: string;
   };
   mainImage?: any;
-  categories?: Array<{ title: string; slug: { current: string } }> | string[];
+  categories?: Category[];
   body?: any;
   linkDemo?: string;
   linkGithub?: string;

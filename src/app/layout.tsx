@@ -3,6 +3,20 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NavbarDemo } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import {
+  SITE_TITLE_DEFAULT,
+  SITE_TITLE_TEMPLATE,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_AUTHOR,
+  SITE_PUBLISHER,
+  SITE_URL,
+  FORMAT_DETECTION,
+  OPEN_GRAPH,
+  TWITTER,
+  ROBOTS_CONFIG,
+  FAVICON_CONFIG
+} from "./constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,44 +31,29 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   // Título estratégico com template
   title: {
-    default: "Esmeralda - Um Novo Brilho, Um Novo Conceito",
-    template: "%s | Esmeralda"
+    default: SITE_TITLE_DEFAULT,
+    template: SITE_TITLE_TEMPLATE
   },
   
   // Descrição otimizada para SEO
-  description: "A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor. Desenvolvimento, design e inovação em tecnologia.",
+  description: SITE_DESCRIPTION,
   
   // Palavras-chaves estratégicas
-  keywords: [
-    "desenvolvimento web", 
-    "tecnologia", 
-    "inovação", 
-    "design system", 
-    "next.js", 
-    "sanity.io",
-    "portfolio",
-    "projetos digitais",
-    "laboratório tecnológico",
-    "consciência lógica"
-  ],
+  keywords: SITE_KEYWORDS,
   
   // Informações do autor/empresa
   authors: [{ 
-    name: "Lucas C. Gomes", 
-    url: "https://seusite.com" 
+    name: SITE_AUTHOR, 
+    url: SITE_URL 
   }],
-  creator: "Lucas C. Gomes",
-  publisher: "Esmeralda Company",
+  creator: SITE_AUTHOR,
+  publisher: SITE_PUBLISHER,
   
   // Configurações de formatação
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
+  formatDetection: FORMAT_DETECTION,
   
   // URL base para links absolutos
-  metadataBase: new URL('https://esmeraldacompany.com.br'),
+  metadataBase: new URL(SITE_URL),
   
   // Link canônico padrão
   alternates: {
@@ -62,71 +61,22 @@ export const metadata: Metadata = {
   },
   
   // Open Graph para redes sociais
-  openGraph: {
-    type: 'website',
-    locale: 'pt_BR',
-    url: 'https://esmeraldacompany.com.br',
-    siteName: 'Esmeralda Company',
-    title: 'Esmeralda - Um Novo Brilho, Um Novo Conceito',
-    description: 'A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor.',
-    images: [
-      {
-        url: '/og-image.jpg', // 👈 Crie uma imagem OG 1200x630
-        width: 1200,
-        height: 630,
-        alt: 'Esmeralda - Laboratório de Consciência Lógica',
-      },
-    ],
-  },
+  openGraph: OPEN_GRAPH,
   
   // Twitter Cards
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Esmeralda - Laboratório de Consciência Lógica',
-    description: 'A Esmeralda é o meu laboratório de consciência lógica.',
-    creator: '@seuusuario', // 👈 Adicione seu @ do Twitter
-    images: ['/og-image.jpg'],
-  },
+  twitter: TWITTER,
   
   // Configurações de robots
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
+  robots: ROBOTS_CONFIG,
   
-  // Verificação para Google Search Console (opcional)
+  // Verificação para Google Search Console 
   // verification: {
   //   google: 'seu-codigo-verificacao-google',
   // },
   
   // Outras metatags importantes
   manifest: '/manifest.json', 
-  icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
-    other: [
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '32x32',
-        url: '/favicon-32x32.png',
-      },
-      {
-        rel: 'icon',
-        type: 'image/png',
-        sizes: '16x16',
-        url: '/favicon-16x16.png',
-      },
-    ],
-  },
+  icons: FAVICON_CONFIG,
 };
 
 export default function RootLayout({

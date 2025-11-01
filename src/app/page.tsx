@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
-import { client, urlFor } from "../sanity/lib/client";
-import Image from "next/image";
+import { client } from "../lib/client";
 import HeroSection from "@/components/HeroSection";
 import ParallaxHeader from "@/components/ParallaxHeader";
 import { SpotlightNewDemo } from "@/components/spotlight";

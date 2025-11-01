@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Newspaper, X, Filter, Search } from "lucide-react";
 import HeroPage from "@/components/HeroPage";
 import { motion } from "framer-motion";
+import { POSTS_QUERY, CATEGORIES_QUERY } from "@/sanity/queries/postQueries";
 
 // Interface para Posts
 interface Post extends SanityDocument {
@@ -46,33 +47,6 @@ export default function BlogClientPage() {
   
   const observer = useRef<IntersectionObserver | null>(null);
   const ref = useRef(null);
-
-  // Query para buscar posts e categorias
-  const POSTS_QUERY = `*[
-    _type == "post"
-    && defined(slug.current)
-  ]|order(publishedAt desc){
-    _id, 
-    title, 
-    slug, 
-    categories[]->{
-      title,
-      slug
-    },
-    publishedAt,
-    mainImage,
-    excerpt,
-    author->{
-      name,
-      image
-    }
-  }`;
-
-  const CATEGORIES_QUERY = `*[_type == "category"]{
-    _id,
-    title,
-    slug
-  }|order(title asc)`;
 
   // Buscar dados iniciais
   useEffect(() => {

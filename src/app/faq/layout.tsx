@@ -1,8 +1,16 @@
 // app/faq/layout.tsx
-import type { Metadata } from "next";
+import { Metadata } from "next";
+import {
+  SITE_NAME,
+  SITE_URL,
+  SITE_KEYWORDS,
+  OPEN_GRAPH,
+  TWITTER,
+  ROBOTS_CONFIG
+} from "../constants";
 
 export const metadata: Metadata = {
-  title: "FAQ | Esmeralda - Perguntas Frequentes",
+  title: `FAQ | ${SITE_NAME}`,
   description: "Encontre respostas para as dúvidas mais comuns sobre desenvolvimento web, projetos, prazos, orçamentos e tecnologias utilizadas pela Esmeralda.",
   keywords: [
     "faq",
@@ -15,18 +23,17 @@ export const metadata: Metadata = {
     "next.js",
     "sanity.io",
     "suporte",
-    "esmeralda company"
+    "esmeralda company",
+    ...SITE_KEYWORDS
   ],
   openGraph: {
+    ...OPEN_GRAPH,
     title: "FAQ | Esmeralda - Perguntas Frequentes",
     description: "Respostas para dúvidas comuns sobre desenvolvimento web, projetos e tecnologias da Esmeralda.",
-    url: "/faq",
-    siteName: "Esmeralda Company",
-    locale: "pt_BR",
-    type: "website",
+    url: `${SITE_URL}/faq`,
     images: [
       {
-        url: "/og-faq.jpg", // 👈 Você vai criar esta imagem
+        url: `${SITE_URL}/og-faq.jpg`,
         width: 1200,
         height: 630,
         alt: "FAQ Esmeralda - Perguntas Frequentes",
@@ -34,18 +41,15 @@ export const metadata: Metadata = {
     ],
   },
   twitter: {
-    card: "summary_large_image",
+    ...TWITTER,
     title: "FAQ | Esmeralda - Perguntas Frequentes",
     description: "Respostas para dúvidas comuns sobre desenvolvimento web e projetos.",
-    images: ["/og-faq.jpg"],
+    images: [`${SITE_URL}/og-faq.jpg`],
   },
   alternates: {
-    canonical: "/faq",
+    canonical: `${SITE_URL}/faq`,
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: ROBOTS_CONFIG,
 };
 
 export default function FaqLayout({
