@@ -65,13 +65,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true} 
       >
-        {/* Error Boundary envolvendo toda a aplicação */}
-        <ErrorBoundary 
-          onReset={() => {
-            // Callback opcional para ações adicionais no reset
-            console.log('Error boundary foi resetado');
-          }}
-        >
+        <ErrorBoundary>
           <NavbarDemo />
           <main className="min-h-screen">
             {children}

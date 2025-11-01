@@ -1,4 +1,3 @@
-// next.config.js
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -27,7 +26,6 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 
   compress: true,
@@ -35,6 +33,18 @@ const nextConfig: NextConfig = {
   generateEtags: false,
 
   async headers() {
+    const cspDirectives = [
+      "default-src 'self'",
+      "script-src 'self'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https://cdn.sanity.io https://images.unsplash.com https://assets.aceternity.com",
+      "font-src 'self'",
+      "connect-src 'self'",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ];
+
     return [
       {
         source: '/(.*)',
@@ -55,48 +65,14 @@ const nextConfig: NextConfig = {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin'
           },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=31536000; includeSubDomains'
-          }
+          // Content-Security-Policy comentada temporariamente
+          // {
+          //   key: 'Content-Security-Policy',
+          //   value: cspDirectives.join('; ')
+          // },
         ],
       },
-      {
-        source: '/:path*.{jpg,jpeg,png,webp,avif,ico,svg}',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000'
-          }
-        ],
-      },
-      {
-        source: '/:path*.{js,css}',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000'
-          }
-        ],
-      },
-      {
-        source: '/:path*.{woff,woff2,ttf,eot}',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, immutable, max-age=31536000'
-          }
-        ],
-      },
-      {
-        source: '/:path*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=3600, stale-while-revalidate=86400'
-          }
-        ],
-      },
+      // ... outros headers de cache
     ]
   },
 
@@ -104,17 +80,12 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   
-  experimental: {
-    optimizeCss: true,
-  },
+  // ❌ REMOVER TEMPORARIAMENTE
+  // experimental: {
+  //   optimizeCss: true,
+  // },
 
   trailingSlash: false,
-  
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
-  },
 }
 
-export default nextConfig
+export default nextConfig;
