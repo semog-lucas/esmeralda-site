@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NavbarDemo } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   SITE_TITLE_DEFAULT,
   SITE_TITLE_TEMPLATE,
@@ -29,52 +30,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  // Título estratégico com template
   title: {
     default: SITE_TITLE_DEFAULT,
     template: SITE_TITLE_TEMPLATE
   },
-  
-  // Descrição otimizada para SEO
   description: SITE_DESCRIPTION,
-  
-  // Palavras-chaves estratégicas
   keywords: SITE_KEYWORDS,
-  
-  // Informações do autor/empresa
   authors: [{ 
     name: SITE_AUTHOR, 
     url: SITE_URL 
   }],
   creator: SITE_AUTHOR,
   publisher: SITE_PUBLISHER,
-  
-  // Configurações de formatação
   formatDetection: FORMAT_DETECTION,
-  
-  // URL base para links absolutos
   metadataBase: new URL(SITE_URL),
-  
-  // Link canônico padrão
   alternates: {
     canonical: '/',
   },
-  
-  // Open Graph para redes sociais
   openGraph: OPEN_GRAPH,
-  
-  // Twitter Cards
   twitter: TWITTER,
-  
-  // Configurações de robots
   robots: ROBOTS_CONFIG,
-  
-  // Verificação para Google Search Console 
-  // verification: {
-  //   google: 'seu-codigo-verificacao-google',
-  // },
-  
-  // Outras metatags importantes
   manifest: '/manifest.json', 
   icons: FAVICON_CONFIG,
 };
@@ -90,9 +65,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true} 
       >
-        <NavbarDemo />
-        {children}
-        <Footer />
+        {/* Error Boundary envolvendo toda a aplicação */}
+        <ErrorBoundary 
+          onReset={() => {
+            // Callback opcional para ações adicionais no reset
+            console.log('Error boundary foi resetado');
+          }}
+        >
+          <NavbarDemo />
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Footer />
+        </ErrorBoundary>
       </body>
     </html>
   );
