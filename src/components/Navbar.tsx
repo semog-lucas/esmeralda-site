@@ -11,6 +11,7 @@ import {
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { NewslatterButton } from "@/components/NewslatterButton";
 import { useState } from "react";
 
 export function NavbarDemo() {
@@ -40,7 +41,7 @@ export function NavbarDemo() {
             <NavbarButton variant="secondary" href="/recursos">
               Recursos
             </NavbarButton>
-            <NavbarButton variant="primary">Newslatter</NavbarButton>
+            <NewslatterButton />
           </div>
         </NavBody>
 
@@ -77,13 +78,7 @@ export function NavbarDemo() {
               >
                 Recursos
               </NavbarButton>
-              <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full"
-              >
-                Newslatter
-              </NavbarButton>
+              <NewslatterButton />
             </div>
           </MobileNavMenu>
         </MobileNav>
