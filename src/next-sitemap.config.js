@@ -63,7 +63,7 @@ module.exports = {
     '/dashboard/*',
     '/404',
     '/500',
-    '/server-sitemap.xml', // Se você tiver um dinâmico
+    '/server-sitemap.xml',
   ],
   
   // Configurações padrão para todas as URLs

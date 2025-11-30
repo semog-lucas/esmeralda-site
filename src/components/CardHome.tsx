@@ -7,7 +7,7 @@ import { PostsGridSkeleton } from "./Skeletons";
 
 interface Post extends SanityDocument {
   title: string;
-  slug: { current: string };
+  slug: string;
   categories?: any[];
   publishedAt: string;
   mainImage?: any;
@@ -22,11 +22,11 @@ interface CardHomeDemoProps {
   gridCols?: string;
 }
 
-export default function CardHomeDemo({ 
-  limit = 3, 
+export default function CardHomeDemo({
+  limit = 3,
   title = "Posts Recentes",
   showViewMore = true,
-  gridCols = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+  gridCols = "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
 }: CardHomeDemoProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,7 @@ export default function CardHomeDemo({
   ]|order(publishedAt desc)[0...${limit}]{
     _id, 
     title, 
-    slug, 
+    "slug": slug.current, 
     categories[]->{
       title,
       slug
@@ -58,7 +58,7 @@ export default function CardHomeDemo({
         const data = await client.fetch<Post[]>(POSTS_QUERY);
         setPosts(data || []);
       } catch (error) {
-        console.error('Erro ao buscar posts:', error);
+        console.error("Erro ao buscar posts:", error);
       } finally {
         setLoading(false);
       }
@@ -79,7 +79,7 @@ export default function CardHomeDemo({
           <h2 className="text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
             {title}
           </h2>
-          
+
           {/* Link "Veja mais" opcional */}
           {showViewMore && (
             <div className="mt-2">
@@ -100,10 +100,7 @@ export default function CardHomeDemo({
       {/* Grid de posts */}
       <div className={`grid ${gridCols} gap-6`}>
         {posts.map((post) => (
-          <BlogCard 
-            key={post._id} 
-            post={post}
-          />
+          <BlogCard key={post._id} post={post} />
         ))}
       </div>
     </div>

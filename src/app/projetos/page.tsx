@@ -11,9 +11,8 @@ import { motion as m } from "framer-motion";
 import HeroPage from "@/components/HeroPage";
 import { BriefcaseIcon } from "lucide-react";
 import SectionContact from "@/components/SectionContact";
-import {Category, Project  } from "@/types/project";
+import { Category, Project } from "@/types/project";
 import { CATEGORIES_QUERY, PROJECTS_QUERY } from "@/sanity/queries/getProjects";
-
 
 const PROJECTS_PER_PAGE = 9;
 
@@ -54,17 +53,17 @@ export default function PortfolioPage() {
   // filtrar projetos
   const filteredProjects = useMemo(() => {
     return allProjects.filter((project) => {
-      const matchesSearch =
-        project.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch = project.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
 
       const matchesCategory =
         selectedCategory === "all" ||
         (project.categories &&
-          project.categories.some(
-            (cat: any) =>
-              typeof cat === "string"
-                ? cat === selectedCategory
-                : cat.title === selectedCategory
+          project.categories.some((cat: any) =>
+            typeof cat === "string"
+              ? cat === selectedCategory
+              : cat.title === selectedCategory
           ));
 
       return matchesSearch && matchesCategory;
@@ -235,13 +234,15 @@ export default function PortfolioPage() {
                     // Apenas mapeamento das categorias, o slug permanece como objeto
                     const mappedProject = {
                       ...project,
-                      categories: project.categories?.map((cat: any) => ({
-                        title: cat.title || cat,
-                        slug: (cat.slug?.current as string) ||
-                          (typeof cat === "string"
-                            ? cat.toLowerCase().replace(/\s+/g, "-")
-                            : cat.title.toLowerCase().replace(/\s+/g, "-")),
-                      })) || [],
+                      categories:
+                        project.categories?.map((cat: any) => ({
+                          title: cat.title || cat,
+                          slug:
+                            cat.slug ||
+                            (typeof cat === "string"
+                              ? cat.toLowerCase().replace(/\s+/g, "-")
+                              : cat.title.toLowerCase().replace(/\s+/g, "-")),
+                        })) || [],
                     };
 
                     return i === displayedProjects.length - 1 ? (

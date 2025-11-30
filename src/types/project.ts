@@ -2,19 +2,13 @@
 export interface Category {
   _id: string;
   title: string;
-  slug: {
-    current: string;
-    _type?: string;
-  };
+  slug: string;
 }
 
 export interface Project {
   _id: string;
   title: string;
-  slug: {
-    current: string;
-    _type?: string;
-  };
+  slug: string;
   mainImage?: any;
   categories?: Category[];
   body?: any;

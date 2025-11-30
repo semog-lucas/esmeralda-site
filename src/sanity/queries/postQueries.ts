@@ -18,13 +18,13 @@ export const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   body,
   excerpt,
   author->{name, image},
-  categories[]->{title, slug}
+  categories[]->{_id, title, slug}
 }`;
 
 export const RELATED_POSTS_QUERY = `*[
   _type == "post" 
   && slug.current != $currentSlug
-  && count(categories[@._ref in ^.^.categories[]._ref]) > 0
+  && count((categories[]->._id)[@ in $categoryIds]) > 0
 ] | order(publishedAt desc)[0...3]{
   _id, 
   title, 
@@ -57,7 +57,7 @@ export const CATEGORIES_QUERY = `*[_type == "category"]{
   "slug": slug.current
 }`;
 
-// Ou, se você quiser uma query mais específica para posts:
+// uma query mais específica para posts:
 export const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
   _id,
   title,

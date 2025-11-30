@@ -13,7 +13,7 @@ interface Category {
 interface Post {
   _id: string;
   title: string;
-  slug: { current: string };
+  slug: string;
   categories?: Category[];
   publishedAt: string;
   mainImage?: any;
@@ -31,23 +31,25 @@ interface BlogCardProps {
   className?: string;
 }
 
-export function BlogCard({ 
-  post, 
+export function BlogCard({
+  post,
   imageSize = { width: 400, height: 225 },
   showExcerpt = true,
   showCategories = true,
   showAuthor = true,
   showDate = true,
-  className = ""
+  className = "",
 }: BlogCardProps) {
-  
   const getImageUrl = (image: any) => {
     if (!image) return null;
     try {
       const urlBuilder = urlFor(image);
-      return urlBuilder?.width(imageSize.width).height(imageSize.height).url() || null;
+      return (
+        urlBuilder?.width(imageSize.width).height(imageSize.height).url() ||
+        null
+      );
     } catch (error) {
-      console.error('Erro ao gerar URL da imagem:', error);
+      console.error("Erro ao gerar URL da imagem:", error);
       return null;
     }
   };
@@ -58,7 +60,7 @@ export function BlogCard({
       const urlBuilder = urlFor(author.image);
       return urlBuilder?.width(32).height(32).url() || null;
     } catch (error) {
-      console.error('Erro ao gerar URL do autor:', error);
+      console.error("Erro ao gerar URL do autor:", error);
       return null;
     }
   };
@@ -67,13 +69,15 @@ export function BlogCard({
   const authorImageUrl = getAuthorImageUrl(post.author);
 
   return (
-    <Card className={`shadow-none py-0 gap-3 hover:shadow-lg transition-all duration-300 group h-full flex flex-col ${className}`}>
+    <Card
+      className={`shadow-none py-0 gap-3 hover:shadow-lg transition-all duration-300 group h-full flex flex-col ${className}`}
+    >
       <CardHeader className="p-0">
-        <Link href={`/blog/${post.slug.current}`} className="block">
+        <Link href={`/blog/${post.slug}`} className="block">
           {imageUrl ? (
             <div className="aspect-video rounded-t-lg overflow-hidden">
               <Image
-                src={imageUrl} 
+                src={imageUrl}
                 alt={post.title}
                 width={imageSize.width}
                 height={imageSize.height}
@@ -87,16 +91,18 @@ export function BlogCard({
           )}
         </Link>
       </CardHeader>
-      
+
       <CardContent className="p-5 flex-1 flex flex-col">
         {/* Categorias */}
         {showCategories && post.categories && post.categories.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
-            {post.categories.slice(0, 2).map((category: Category, index: number) => (
-              <Badge key={index} variant="secondary" className="text-xs">
-                {category.title}
-              </Badge>
-            ))}
+            {post.categories
+              .slice(0, 2)
+              .map((category: Category, index: number) => (
+                <Badge key={index} variant="secondary" className="text-xs">
+                  {category.title}
+                </Badge>
+              ))}
             {post.categories.length > 2 && (
               <Badge variant="outline" className="text-xs">
                 +{post.categories.length - 2}
@@ -106,7 +112,7 @@ export function BlogCard({
         )}
 
         {/* Título */}
-        <Link href={`/blog/${post.slug.current}`} className="flex-1">
+        <Link href={`/blog/${post.slug}`} className="flex-1">
           <h3 className="text-lg font-semibold tracking-tight line-clamp-2 hover:text-primary transition-colors mb-3">
             {post.title}
           </h3>
@@ -128,7 +134,7 @@ export function BlogCard({
                   <div className="size-8 rounded-full overflow-hidden">
                     <Image
                       src={authorImageUrl}
-                      alt={post.author?.name || 'Autor'}
+                      alt={post.author?.name || "Autor"}
                       width={32}
                       height={32}
                       className="w-full h-full object-cover"
@@ -137,19 +143,19 @@ export function BlogCard({
                 ) : (
                   <div className="size-8 rounded-full bg-muted flex items-center justify-center">
                     <span className="text-xs font-medium">
-                      {post.author?.name?.charAt(0) || 'E'}
+                      {post.author?.name?.charAt(0) || "E"}
                     </span>
                   </div>
                 )}
                 <span className="text-muted-foreground text-sm">
-                  {post.author?.name || 'Esmeralda Team'}
+                  {post.author?.name || "Esmeralda Team"}
                 </span>
               </div>
             )}
-            
+
             {showDate && (
               <span className="text-muted-foreground text-sm">
-                {new Date(post.publishedAt).toLocaleDateString('pt-BR')}
+                {new Date(post.publishedAt).toLocaleDateString("pt-BR")}
               </span>
             )}
           </div>

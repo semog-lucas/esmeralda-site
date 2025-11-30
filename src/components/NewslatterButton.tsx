@@ -6,10 +6,30 @@ import { motion, AnimatePresence } from "motion/react";
 export function NewslatterButton() {
   const [open, setOpen] = useState(false);
 
+  const handleButtonClick = () => {
+    console.log("Abrindo modal");
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    console.log("Fechando modal");
+    setOpen(false);
+  };
+
+  // Usar setTimeout para dar tempo do modal renderizar completamente
+  const handleBackdropClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      // Pequeno delay para garantir que não é o clique inicial
+      setTimeout(() => {
+        setOpen(false);
+      }, 10);
+    }
+  };
+
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
+        onClick={handleButtonClick}
         className="px-4 py-2 rounded-md bg-black text-white dark:bg-white dark:text-black hover:opacity-90 transition"
       >
         Newsletter
@@ -19,10 +39,11 @@ export function NewslatterButton() {
         {open && (
           <Portal>
             <motion.div
-              className="fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm flex items-center justify-center"
+              className="fixed inset-0 z-99999 bg-black/50 backdrop-blur-sm flex items-center justify-center"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              onClick={handleBackdropClick}
             >
               <motion.div
                 initial={{ scale: 0.9, opacity: 0 }}
@@ -30,10 +51,11 @@ export function NewslatterButton() {
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="bg-white dark:bg-neutral-900 rounded-xl p-8 shadow-xl max-w-md w-full mx-4 relative"
+                onClick={(e) => e.stopPropagation()}
               >
                 <button
-                  onClick={() => setOpen(false)}
-                  className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+                  onClick={handleClose}
+                  className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-lg w-6 h-6 flex items-center justify-center"
                 >
                   ✕
                 </button>
@@ -62,7 +84,7 @@ export function NewslatterButton() {
                   />
                   <button
                     type="submit"
-                    className="bg-black text-white dark:bg-white dark:text-black py-2 rounded-md font-medium hover:opacity-90"
+                    className="bg-black text-white dark:bg-white dark:text-black py-2 rounded-md font-medium hover:opacity-90 transition"
                   >
                     Inscrever-se
                   </button>

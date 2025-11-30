@@ -7,7 +7,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
 import { Calendar, ArrowLeft } from "lucide-react";
-import { PROJECT_METADATA_QUERY, PROJECT_QUERY, RELATED_PROJECTS_QUERY, RECENT_PROJECTS_QUERY } from "@/sanity/queries/getProjects";
+import {
+  PROJECT_METADATA_QUERY,
+  PROJECT_QUERY,
+  RELATED_PROJECTS_QUERY,
+  RECENT_PROJECTS_QUERY,
+} from "@/sanity/queries/getProjects";
 import type { Project } from "@/types/project";
 import {
   SITE_NAME,
@@ -15,9 +20,8 @@ import {
   SITE_KEYWORDS,
   OPEN_GRAPH,
   TWITTER,
-  ROBOTS_CONFIG
+  ROBOTS_CONFIG,
 } from "@/app/constants";
-
 
 const { projectId, dataset } = client.config();
 
@@ -32,7 +36,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  
+
   const project = await client.fetch(PROJECT_METADATA_QUERY, { slug });
 
   if (!project) {
@@ -44,12 +48,15 @@ export async function generateMetadata({
 
   // Garantir que imageUrl nunca seja undefined
   const imageUrl = project?.mainImage
-    ? urlFor(project.mainImage)?.width(1200).height(630).url() || `${SITE_URL}/og-projetos.jpg`
+    ? urlFor(project.mainImage)?.width(1200).height(630).url() ||
+      `${SITE_URL}/og-projetos.jpg`
     : `${SITE_URL}/og-projetos.jpg`;
 
   const description = `Confira o projeto ${project.title} ${
-    project.categories?.[0]?.title ? `na categoria ${project.categories[0].title}` : ''
-  }. ${project.linkDemo ? 'Demo disponível.' : ''}`;
+    project.categories?.[0]?.title
+      ? `na categoria ${project.categories[0].title}`
+      : ""
+  }. ${project.linkDemo ? "Demo disponível." : ""}`;
 
   const fullTitle = `${project.title} | Projeto ${SITE_NAME}`;
   const fullUrl = `${SITE_URL}/projetos/${slug}`;
@@ -74,7 +81,7 @@ export async function generateMetadata({
       "projeto",
       "desenvolvimento web",
       "portfolio",
-      ...SITE_KEYWORDS
+      ...SITE_KEYWORDS,
     ],
     openGraph: {
       ...OPEN_GRAPH,
@@ -109,40 +116,42 @@ function ProjectStructuredData({ project }: { project: any }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    "name": project.title,
-    "description": `Projeto ${project.title} do laboratório Esmeralda`,
-    "image": project.mainImage
+    name: project.title,
+    description: `Projeto ${project.title} do laboratório Esmeralda`,
+    image: project.mainImage
       ? urlFor(project.mainImage)?.width(1200).height(630).url()
       : "https://esmeralda.dev/og-projetos.jpg",
-    "datePublished": project.publishedAt,
-    "dateModified": project.publishedAt,
-    "author": {
+    datePublished: project.publishedAt,
+    dateModified: project.publishedAt,
+    author: {
       "@type": "Organization",
-      "name": "Esmeralda",
+      name: "Esmeralda",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "Esmeralda",
-      "logo": {
+      name: "Esmeralda",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png"
-      }
+        url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
+      },
     },
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://esmeraldacompany.com.br/projetos/${project.slug}`
+      "@id": `https://esmeraldacompany.com.br/projetos/${project.slug}`,
     },
-    "genre": project.categories?.[0]?.title || "Desenvolvimento Web",
-    "keywords": project.categories?.map((cat: any) => cat.title).join(", ") || "tecnologia",
-    "url": `https://esmeraldacompany.com.br/projetos/${project.slug}`,
+    genre: project.categories?.[0]?.title || "Desenvolvimento Web",
+    keywords:
+      project.categories?.map((cat: any) => cat.title).join(", ") ||
+      "tecnologia",
+    url: `https://esmeraldacompany.com.br/projetos/${project.slug}`,
     ...(project.linkDemo && {
-      "workExample": {
+      workExample: {
         "@type": "SoftwareSourceCode",
-        "codeRepository": project.linkDemo,
-        "programmingLanguage": "JavaScript",
-        "runtimePlatform": "Web"
-      }
-    })
+        codeRepository: project.linkDemo,
+        programmingLanguage: "JavaScript",
+        runtimePlatform: "Web",
+      },
+    }),
   };
 
   return (
@@ -159,7 +168,12 @@ const PortableTextComponents = {
     image: ({ value }: any) => {
       if (!value?.asset?._ref) return null;
 
-      const imageUrl = urlFor(value)?.width(800).height(600).fit("max").auto("format").url();
+      const imageUrl = urlFor(value)
+        ?.width(800)
+        .height(600)
+        .fit("max")
+        .auto("format")
+        .url();
 
       if (!imageUrl) return null;
 
@@ -173,7 +187,9 @@ const PortableTextComponents = {
             className="rounded-lg object-cover"
           />
           {value.caption && (
-            <p className="text-center text-sm text-muted-foreground mt-2">{value.caption}</p>
+            <p className="text-center text-sm text-muted-foreground mt-2">
+              {value.caption}
+            </p>
           )}
         </div>
       );
@@ -183,16 +199,22 @@ const PortableTextComponents = {
 
 // Component para projetos relacionados
 async function RelatedProjects({ currentSlug }: { currentSlug: string }) {
-  let relatedProjects = await client.fetch(RELATED_PROJECTS_QUERY, { currentSlug });
+  let relatedProjects = await client.fetch(RELATED_PROJECTS_QUERY, {
+    currentSlug,
+  });
 
   if (!relatedProjects || relatedProjects.length === 0) {
-    relatedProjects = await client.fetch(RECENT_PROJECTS_QUERY, { currentSlug });
+    relatedProjects = await client.fetch(RECENT_PROJECTS_QUERY, {
+      currentSlug,
+    });
   }
 
   if (!relatedProjects || relatedProjects.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">Nenhum projeto relacionado encontrado.</p>
+        <p className="text-muted-foreground">
+          Nenhum projeto relacionado encontrado.
+        </p>
       </div>
     );
   }
@@ -204,11 +226,12 @@ async function RelatedProjects({ currentSlug }: { currentSlug: string }) {
           key={project._id}
           post={{
             ...project,
-            slug: { current: project.slug },
-            categories: project.categories?.map((cat: any) => ({
-              title: cat.title,
-              slug: { current: cat.slug }
-            })) || []
+            slug: project.slug,
+            categories:
+              project.categories?.map((cat: any) => ({
+                title: cat.title,
+                slug: cat.slug,
+              })) || [],
           }}
           showExcerpt={true}
         />
@@ -293,7 +316,10 @@ export default async function ProjectPage({
       <main className="container mx-auto min-h-screen max-w-4xl p-8 flex flex-col gap-6">
         <article className="prose prose-lg max-w-none dark:prose-invert">
           {Array.isArray(project.body) && (
-            <PortableText value={project.body} components={PortableTextComponents} />
+            <PortableText
+              value={project.body}
+              components={PortableTextComponents}
+            />
           )}
         </article>
 
@@ -318,7 +344,11 @@ export default async function ProjectPage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 border border-border px-6 py-3 rounded-lg hover:bg-accent transition-colors"
               >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                <svg
+                  className="w-4 h-4"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
                   <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                 </svg>
                 Ver Código
@@ -330,12 +360,14 @@ export default async function ProjectPage({
         {/* Projetos Relacionados */}
         <section className="pt-16 mt-16 border-t border-border">
           <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Projetos Relacionados</h2>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Projetos Relacionados
+            </h2>
             <p className="text-muted-foreground">
               Descubra mais projetos que podem te interessar
             </p>
           </div>
-          <RelatedProjects currentSlug={project.slug.current} />
+          <RelatedProjects currentSlug={project.slug} />
         </section>
         <div className="flex justify-center pt-8">
           <Link

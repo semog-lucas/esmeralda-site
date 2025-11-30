@@ -17,7 +17,7 @@ import { POSTS_QUERY, CATEGORIES_QUERY } from "@/sanity/queries/postQueries";
 // Interface para Posts
 interface Post extends SanityDocument {
   title: string;
-  slug: { current: string };
+  slug: string;
   categories?: { title: string; slug: { current: string } }[];
   publishedAt: string;
   mainImage?: any;
@@ -44,7 +44,7 @@ export default function BlogClientPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  
+
   const observer = useRef<IntersectionObserver | null>(null);
   const ref = useRef(null);
 
@@ -185,7 +185,7 @@ export default function BlogClientPage() {
           />
         </div>
       </motion.header>
-      
+
       <div className="min-h-screen bg-background">
         <div className="container mx-auto px-6 py-16">
           {/* Filtros */}

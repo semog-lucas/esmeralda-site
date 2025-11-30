@@ -3,6 +3,8 @@ import { client } from "@/lib/client";
 import HeroSection from "@/components/HeroSection";
 import ParallaxHeader from "@/components/ParallaxHeader";
 import { SpotlightNewDemo } from "@/components/spotlight";
+import { BentoGridSecondDemo } from "@/components/GridHome";
+import CardHomeDemo from "@/components/CardHome";
 
 const POSTS_QUERY = `*[
   _type == "post"
@@ -29,7 +31,12 @@ export default async function HomePage() {
         <HeroSection />
       </ParallaxHeader>
 
-      <main id="main-content" role="main" className="min-h-screen"> 
+      <section className="w-full min-h-screen mt-20">
+        <BentoGridSecondDemo />
+        <CardHomeDemo />
+      </section>
+
+      <main id="main-content" role="main" className="min-h-screen">
         <SpotlightNewDemo />
       </main>
     </>

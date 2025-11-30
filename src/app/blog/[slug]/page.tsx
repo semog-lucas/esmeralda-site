@@ -7,9 +7,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
 import { Calendar, User, ArrowLeft } from "lucide-react";
-import { POST_QUERY, RELATED_POSTS_QUERY, POST_METADATA_QUERY, RECENT_POSTS_QUERY } from "@/sanity/queries/postQueries";
-
-
+import {
+  POST_QUERY,
+  RELATED_POSTS_QUERY,
+  POST_METADATA_QUERY,
+  RECENT_POSTS_QUERY,
+} from "@/sanity/queries/postQueries";
 
 const { projectId, dataset } = client.config();
 
@@ -40,8 +43,9 @@ export async function generateMetadata({
     : "/og-blog.jpg";
 
   // Construir descrição (prioridade: excerpt > fallback)
-  const description = post.excerpt || 
-    `Confira o post "${post.title}" no blog da Esmeralda. ${post.categories?.[0]?.title ? `Categoria: ${post.categories[0].title}` : ''}`;
+  const description =
+    post.excerpt ||
+    `Confira o post "${post.title}" no blog da Esmeralda. ${post.categories?.[0]?.title ? `Categoria: ${post.categories[0].title}` : ""}`;
 
   // Construir keywords das categorias
   const keywords = [
@@ -132,31 +136,32 @@ function PostStructuredData({ post }: { post: any }) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    "headline": post.title,
-    "description": post.excerpt || post.title,
-    "image": post.mainImage 
+    headline: post.title,
+    description: post.excerpt || post.title,
+    image: post.mainImage
       ? urlFor(post.mainImage)?.width(1200).height(630).url()
       : "https://esmeralda.dev/og-blog.jpg",
-    "datePublished": post.publishedAt,
-    "dateModified": post.publishedAt,
-    "author": {
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
       "@type": "Person",
-      "name": post.author?.name || "Esmeralda",
+      name: post.author?.name || "Esmeralda",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "Esmeralda",
-      "logo": {
+      name: "Esmeralda",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://esmeralda.dev/logo.png"
-      }
+        url: "https://esmeralda.dev/logo.png",
+      },
     },
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://esmeralda.dev/blog/${post.slug.current}`
+      "@id": `https://esmeralda.dev/blog/${post.slug}`,
     },
-    "articleSection": post.categories?.[0]?.title || "Tecnologia",
-    "keywords": post.categories?.map((cat: any) => cat.title).join(", ") || "tecnologia"
+    articleSection: post.categories?.[0]?.title || "Tecnologia",
+    keywords:
+      post.categories?.map((cat: any) => cat.title).join(", ") || "tecnologia",
   };
 
   return (
@@ -168,22 +173,35 @@ function PostStructuredData({ post }: { post: any }) {
 }
 
 // Componente assíncrono para posts relacionados
-async function RelatedPosts({ currentSlug }: { currentSlug: string }) {
-  let relatedPosts = await client.fetch(RELATED_POSTS_QUERY, { 
-    currentSlug 
-  });
+async function RelatedPosts({
+  currentSlug,
+  categoryIds,
+}: {
+  currentSlug: string;
+  categoryIds?: string[];
+}) {
+  let relatedPosts = [];
+
+  if (categoryIds && categoryIds.length > 0) {
+    relatedPosts = await client.fetch(RELATED_POSTS_QUERY, {
+      currentSlug,
+      categoryIds,
+    });
+  }
 
   // Fallback para posts recentes se não houver relacionados
   if (!relatedPosts || relatedPosts.length === 0) {
-    relatedPosts = await client.fetch(RECENT_POSTS_QUERY, { 
-      currentSlug 
+    relatedPosts = await client.fetch(RECENT_POSTS_QUERY, {
+      currentSlug,
     });
   }
 
   if (!relatedPosts || relatedPosts.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-muted-foreground">Nenhum post relacionado encontrado.</p>
+        <p className="text-muted-foreground">
+          Nenhum post relacionado encontrado.
+        </p>
       </div>
     );
   }
@@ -191,7 +209,7 @@ async function RelatedPosts({ currentSlug }: { currentSlug: string }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {relatedPosts.map((relatedPost: any) => (
-        <BlogCard 
+        <BlogCard
           key={relatedPost._id}
           post={relatedPost}
           imageSize={{ width: 400, height: 225 }}
@@ -224,6 +242,9 @@ export default async function PostPage({
       </main>
     );
   }
+
+  // Extract category IDs safely
+  const categoryIds = post.categories?.map((cat: any) => cat._id) || [];
 
   return (
     <>
@@ -336,12 +357,16 @@ export default async function PostPage({
         {/* Posts Relacionados */}
         <section className="pt-16 mt-16 border-t border-border">
           <div className="mb-8">
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">Posts Relacionados</h2>
-            <p className="text-muted-foreground">Descubra mais conteúdos que podem te interessar</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+              Posts Relacionados
+            </h2>
+            <p className="text-muted-foreground">
+              Descubra mais conteúdos que podem te interessar
+            </p>
           </div>
 
           {/* Componente assíncrono para posts relacionados */}
-          <RelatedPosts currentSlug={post.slug.current} />
+          <RelatedPosts currentSlug={post.slug} categoryIds={categoryIds} />
         </section>
 
         {/* Link para voltar ao blog */}

@@ -2,7 +2,7 @@ import { sanityFetch } from "@/lib/live";
 import HeroPerfil from "@/components/HeroPerfil";
 import { BlogCard } from "@/components/BlogCard";
 import { ProjectCard } from "@/components/ProjectCard";
-import { AUTHOR_WITH_CONTENT_QUERY } from '@/sanity/queries/getAuthor';
+import { AUTHOR_WITH_CONTENT_QUERY } from "@/sanity/queries/getAuthor";
 
 export default async function PagePerfil() {
   const result = await sanityFetch({
@@ -22,7 +22,7 @@ export default async function PagePerfil() {
   return (
     <>
       <HeroPerfil author={author} />
-      
+
       {/* Seção de Posts do Autor */}
       {author.posts && author.posts.length > 0 && (
         <section className="container mx-auto px-8 lg:px-48 py-16 mt-25">
@@ -37,7 +37,7 @@ export default async function PagePerfil() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {author.posts.map((post: any) => (
-              <BlogCard 
+              <BlogCard
                 key={post._id}
                 post={post}
                 imageSize={{ width: 400, height: 225 }}
@@ -68,39 +68,37 @@ export default async function PagePerfil() {
             {author.projects.map((project: any, index: number) => {
               const mappedProject = {
                 ...project,
-                categories: project.categories?.map((cat: any) => ({
-                  title: cat.title || cat,
-                  slug: (cat.slug?.current as string) ||
-                    (typeof cat === "string"
-                      ? cat.toLowerCase().replace(/\s+/g, "-")
-                      : cat.title.toLowerCase().replace(/\s+/g, "-")),
-                })) || [],
+                categories:
+                  project.categories?.map((cat: any) => ({
+                    title: cat.title || cat,
+                    slug:
+                      cat.slug ||
+                      (typeof cat === "string"
+                        ? cat.toLowerCase().replace(/\s+/g, "-")
+                        : cat.title.toLowerCase().replace(/\s+/g, "-")),
+                  })) || [],
               };
 
-              return (
-                <ProjectCard 
-                  key={project._id} 
-                  project={mappedProject}
-                />
-              );
+              return <ProjectCard key={project._id} project={mappedProject} />;
             })}
           </div>
         </section>
       )}
 
       {/* Mensagem se não houver conteúdo */}
-      {(!author.posts || author.posts.length === 0) && (!author.projects || author.projects.length === 0) && (
-        <section className="container mx-auto px-8 lg:px-48 py-16 -mt-80">
-          <div className="text-center py-16">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
-              Nenhum conteúdo publicado ainda
-            </h3>
-            <p className="text-muted-foreground">
-              {author.name} ainda não publicou nenhum artigo ou projeto.
-            </p>
-          </div>
-        </section>
-      )}
+      {(!author.posts || author.posts.length === 0) &&
+        (!author.projects || author.projects.length === 0) && (
+          <section className="container mx-auto px-8 lg:px-48 py-16 -mt-80">
+            <div className="text-center py-16">
+              <h3 className="text-2xl font-bold text-foreground mb-4">
+                Nenhum conteúdo publicado ainda
+              </h3>
+              <p className="text-muted-foreground">
+                {author.name} ainda não publicou nenhum artigo ou projeto.
+              </p>
+            </div>
+          </section>
+        )}
     </>
   );
 }
