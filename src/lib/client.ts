@@ -13,5 +13,5 @@ const builder = imageUrlBuilder(client)
 
 export const urlFor = (source: any) => {
   if (!source) return null
-  return builder.image(source)
+  return builder.image(source).auto('format').fit('max')
 }
