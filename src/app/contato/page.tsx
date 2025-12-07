@@ -9,7 +9,7 @@ export default function ContactPage() {
         title="Contato"
         description="Entre em contato conosco para mais informações ou para agendar uma conversa."
         icon={PhoneIcon}
-        imageSrc="/hero-sobre.jpg"
+        imageSrc="/hero-sobre.webp"
       />
       <div className="bg-cover bg-center">
         <SectionContact />

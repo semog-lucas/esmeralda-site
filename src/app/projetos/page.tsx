@@ -29,7 +29,7 @@ export default async function PortfolioPage() {
         title="Projetos"
         description="A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor."
         icon={BriefcaseIcon}
-        imageSrc="/hero-portfolio.jpg"
+        imageSrc="/hero-portfolio.webp"
       />
 
       <div className="min-h-screen bg-background">

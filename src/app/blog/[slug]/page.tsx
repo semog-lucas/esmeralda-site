@@ -269,7 +269,7 @@ export default async function PostPage({
           <div
             className="absolute inset-0 bg-cover bg-center brightness-50 blur-sm"
             style={{
-              backgroundImage: "url('/hero-blog.jpg')",
+              backgroundImage: "url('/hero-blog.webp')",
             }}
           />
         )}

@@ -2,7 +2,7 @@
 import React from "react";
 import { Timeline } from "@/components/ui/timeline";
 import Image from "next/image";
-import Perfil from "../../public/perfil-lucas.png";
+import Perfil from "../../public/perfil-lucas.webp";
 import { FloatingDockDemo } from "@/components/Float";
 import { useState, useEffect } from "react";
 import DottedGlowBackground from "@/components/ui/dotted-glow-background";

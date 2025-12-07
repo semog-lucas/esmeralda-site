@@ -12,7 +12,7 @@ export default function NotFound() {
         title="Página não encontrada"
         description="Oops! A página que você tentou acessar não existe ou foi movida."
         icon={CloudAlert}
-        imageSrc="/not-found-img.jpg"
+        imageSrc="/not-found-img.webp"
       >
         <div className="mt-6 flex items-center justify-center gap-4">
           <Link href="/">

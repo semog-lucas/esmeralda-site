@@ -9,7 +9,7 @@ export default function FaqPage() {
         title="Dúvidas Frequentes"
         description=""
         icon={MessageCircleQuestionMark}
-        imageSrc="/hero-faq.jpg"
+        imageSrc="/hero-faq.webp"
       />
       <FaqSection />
     </>

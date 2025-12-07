@@ -11,7 +11,7 @@ export default function AboutPage() {
         title="Por trás do Código"
         description="A Esmeralda é o meu laboratório de consciência lógica -  uma linha de pensamento sobre como o mundo pode funcionar melhor."
         icon={UserIcon}
-        imageSrc="/hero-sobre.jpg"
+        imageSrc="/hero-sobre.webp"
       />
 
       <TimelineDemo />
