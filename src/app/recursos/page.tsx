@@ -38,7 +38,7 @@ export default function RecursosPage() {
       <HeroPage
         title="Recursos"
         description="Explore uma coleção de recursos cuidadosamente selecionados para aprimorar suas habilidades e conhecimentos."
-        icon={FolderCode}
+        icon={<FolderCode />}
         imageSrc="/hero-recursos.webp"
       />
       <div className="bg-cover bg-center mt-10 mb-10">

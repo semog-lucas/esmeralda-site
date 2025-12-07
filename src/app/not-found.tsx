@@ -11,7 +11,7 @@ export default function NotFound() {
       <HeroPage
         title="Página não encontrada"
         description="Oops! A página que você tentou acessar não existe ou foi movida."
-        icon={CloudAlert}
+        icon={<CloudAlert />}
         imageSrc="/not-found-img.webp"
       >
         <div className="mt-6 flex items-center justify-center gap-4">

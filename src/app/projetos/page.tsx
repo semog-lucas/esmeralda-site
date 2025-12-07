@@ -28,7 +28,7 @@ export default async function PortfolioPage() {
       <HeroPage
         title="Projetos"
         description="A Esmeralda é o meu laboratório de consciência lógica - uma linha de pensamento sobre como o mundo pode funcionar melhor."
-        icon={BriefcaseIcon}
+        icon={<BriefcaseIcon />}
         imageSrc="/hero-portfolio.webp"
       />
 

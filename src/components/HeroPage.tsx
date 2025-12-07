@@ -7,7 +7,7 @@ type HeroPageProps = {
   title: string;
   description: string;
   imageSrc?: string;
-  icon?: LucideIcon | React.ElementType;
+  icon?: React.ReactNode;
   children?: React.ReactNode;
 };
 
@@ -15,7 +15,7 @@ export default function HeroPage({
   title,
   description,
   imageSrc,
-  icon: Icon,
+  icon,
   children,
 }: HeroPageProps) {
   const ref = useRef(null);
@@ -80,12 +80,12 @@ export default function HeroPage({
           </m.div>
 
           {/* Ícone animado no lado direito */}
-          {Icon && (
+          {icon && (
             <m.div
               style={{ y: yImage }}
-              className="pointer-events-none absolute inset-y-0 right-0 hidden md:flex items-center"
+              className="pointer-events-none absolute inset-y-0 right-0 hidden md:flex items-center [&>svg]:w-32 [&>svg]:h-32 [&>svg]:text-white/70 [&>svg]:mr-10"
             >
-              <Icon className="w-32 h-32 text-white/70 mr-10" />
+              {icon}
             </m.div>
           )}
         </m.div>

@@ -161,8 +161,8 @@ export default function BlogClientPage() {
       <HeroPage
         title="Blog"
         description="Insights, tendências e conhecimento técnico sobre tecnologia, automação e inovação sustentável."
-        icon={Newspaper}
-        imageSrc="/hero-blog.jpg"
+        icon={<Newspaper />}
+        imageSrc="/hero-blog.webp"
       />
 
       <div className="min-h-screen bg-background">

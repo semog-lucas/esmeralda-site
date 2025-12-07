@@ -13,8 +13,6 @@ export function BentoGridSecondDemo() {
           description={item.description}
           header={item.header}
           className={item.className}
-          // Note que removi o prop 'icon' daqui, pois ele já está dentro do header (BentoImage)
-          // Mas adicionei o href para o link funcionar
           href={item.href}
         />
       ))}
@@ -58,7 +56,7 @@ const items = [
     description: "Projetos que buscam ideias Integradas.",
     header: (
       <BentoImage
-        src="/hero-portfolio.jpg"
+        src="/hero-portfolio.webp"
         alt="Projetos"
         icon={<BriefcaseIcon className="h-5 w-5 text-white" />}
       />
@@ -71,7 +69,7 @@ const items = [
     description: "Conheça os ideais que nos guiam.",
     header: (
       <BentoImage
-        src="/hero-sobre.jpg"
+        src="/hero-sobre.webp"
         alt="Equipe"
         icon={<UserIcon className="h-5 w-5 text-white" />}
       />
@@ -84,7 +82,7 @@ const items = [
     description: "Explore Alguns App Favoritos.",
     header: (
       <BentoImage
-        src="/hero-recursos.jpg"
+        src="/hero-recursos.webp"
         alt="Recursos"
         icon={<FolderCode className="h-5 w-5 text-white" />}
       />
@@ -97,7 +95,7 @@ const items = [
     description: "De onde vem as ideias.",
     header: (
       <BentoImage
-        src="/hero-blog.jpg"
+        src="/hero-blog.webp"
         alt="Laboratório"
         icon={<Newspaper className="h-5 w-5 text-white" />}
       />

@@ -8,7 +8,7 @@ export default function ContactPage() {
       <HeroPage
         title="Contato"
         description="Entre em contato conosco para mais informações ou para agendar uma conversa."
-        icon={PhoneIcon}
+        icon={<PhoneIcon />}
         imageSrc="/hero-sobre.webp"
       />
       <div className="bg-cover bg-center">

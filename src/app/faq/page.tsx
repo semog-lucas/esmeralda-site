@@ -8,7 +8,7 @@ export default function FaqPage() {
       <HeroPage
         title="Dúvidas Frequentes"
         description=""
-        icon={MessageCircleQuestionMark}
+        icon={<MessageCircleQuestionMark />}
         imageSrc="/hero-faq.webp"
       />
       <FaqSection />

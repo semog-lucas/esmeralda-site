@@ -10,7 +10,7 @@ export default function AboutPage() {
       <HeroPage
         title="Por trás do Código"
         description="A Esmeralda é o meu laboratório de consciência lógica -  uma linha de pensamento sobre como o mundo pode funcionar melhor."
-        icon={UserIcon}
+        icon={<UserIcon />}
         imageSrc="/hero-sobre.webp"
       />
 

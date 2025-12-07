@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { NavbarDemo } from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/SmoothScroll";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import {
   SITE_TITLE_DEFAULT,
@@ -16,7 +17,7 @@ import {
   OPEN_GRAPH,
   TWITTER,
   ROBOTS_CONFIG,
-  FAVICON_CONFIG
+  FAVICON_CONFIG,
 } from "./constants";
 
 const geistSans = Geist({
@@ -32,25 +33,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: SITE_TITLE_DEFAULT,
-    template: SITE_TITLE_TEMPLATE
+    template: SITE_TITLE_TEMPLATE,
   },
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
-  authors: [{ 
-    name: SITE_AUTHOR, 
-    url: SITE_URL 
-  }],
+  authors: [
+    {
+      name: SITE_AUTHOR,
+      url: SITE_URL,
+    },
+  ],
   creator: SITE_AUTHOR,
   publisher: SITE_PUBLISHER,
   formatDetection: FORMAT_DETECTION,
   metadataBase: new URL(SITE_URL),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: OPEN_GRAPH,
   twitter: TWITTER,
   robots: ROBOTS_CONFIG,
-  manifest: '/manifest.json', 
+  manifest: "/manifest.json",
   icons: FAVICON_CONFIG,
 };
 
@@ -60,17 +63,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR" className="dark"> 
+    <html lang="pt-BR" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning={true} 
+        suppressHydrationWarning={true}
       >
         <ErrorBoundary>
           <NavbarDemo />
-          <main className="min-h-screen">
-            {children}
-          </main>
-          <Footer />
+          <SmoothScroll>
+            <main className="min-h-screen">{children}</main>
+            <Footer />
+          </SmoothScroll>
         </ErrorBoundary>
       </body>
     </html>
