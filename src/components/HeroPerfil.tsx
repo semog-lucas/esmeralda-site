@@ -38,7 +38,7 @@ function HeroPerfil({ author }: HeroPerfilProps) {
     author.bio?.[0]?.children?.[0]?.text || "Descrição não disponível";
   const imageUrl = author.image ? urlFor(author.image).url() : null;
 
-  // Links das redes sociais ATUALIZADOS para usar dados do Sanity
+  // Links das redes sociais para usar dados do Sanity
   const socialLinks = [
     {
       name: "GitHub",

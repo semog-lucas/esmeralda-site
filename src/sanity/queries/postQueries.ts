@@ -4,7 +4,7 @@ export const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][
   excerpt,
   mainImage,
   publishedAt,
-  "slug": slug.current,
+  slug,
   author->{name, image},
   categories[]->{title, slug}
 }`;
@@ -12,7 +12,7 @@ export const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][
 export const POST_QUERY = `*[_type == "post" && slug.current == $slug][0]{
   _id,
   title,
-  "slug": slug.current,
+  slug,
   publishedAt,
   mainImage,
   body,
@@ -28,7 +28,7 @@ export const RELATED_POSTS_QUERY = `*[
 ] | order(publishedAt desc)[0...3]{
   _id, 
   title, 
-  "slug": slug.current, 
+  slug, 
   categories[]->{title, slug},
   publishedAt,
   mainImage,
@@ -42,7 +42,7 @@ export const RECENT_POSTS_QUERY = `*[
 ] | order(publishedAt desc)[0...3]{
   _id, 
   title, 
-  "slug": slug.current, 
+  slug, 
   categories[]->{title, slug},
   publishedAt,
   mainImage,
@@ -54,17 +54,17 @@ export const RECENT_POSTS_QUERY = `*[
 export const CATEGORIES_QUERY = `*[_type == "category"]{
   _id,
   title,
-  "slug": slug.current
+  slug
 }`;
 
 // uma query mais específica para posts:
 export const POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc){
   _id,
   title,
-  "slug": slug.current,
+  slug,
   publishedAt,
   mainImage,
   excerpt,
   author->{name, image},
-  categories[]->{title, "slug": slug.current}
+  categories[]->{title, slug}
 }`;

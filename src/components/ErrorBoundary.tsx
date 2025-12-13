@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Component, ErrorInfo, ReactNode } from 'react';
-import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Component, ErrorInfo, ReactNode } from "react";
+import { AlertTriangle, RefreshCw, Home } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   children: ReactNode;
@@ -18,7 +18,7 @@ interface State {
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
-    hasError: false
+    hasError: false,
   };
 
   public static getDerivedStateFromError(error: Error): State {
@@ -26,21 +26,21 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error Boundary capturou um erro:', error, errorInfo);
+    console.error("Error Boundary capturou um erro:", error, errorInfo);
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     });
 
-    // Aqui você pode integrar com um serviço de logging como Sentry
+    // Aqui pode integrar com um serviço de logging como Sentry
     // if (process.env.NODE_ENV === 'production') {
     //   Sentry.captureException(error, { extra: errorInfo });
-    // }
+    //
   }
 
   private handleReset = () => {
     this.setState({ hasError: false, error: undefined, errorInfo: undefined });
-    
+
     if (this.props.onReset) {
       this.props.onReset();
     }
@@ -51,7 +51,7 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   private handleGoHome = () => {
-    window.location.href = '/';
+    window.location.href = "/";
   };
 
   public render() {
@@ -70,13 +70,13 @@ export class ErrorBoundary extends Component<Props, State> {
             <h1 className="text-2xl font-bold text-foreground mb-3">
               Algo deu errado
             </h1>
-            
+
             <p className="text-muted-foreground mb-6">
               Desculpe pelo inconveniente. Encontramos um erro inesperado.
             </p>
 
             {/* Detalhes apenas em desenvolvimento */}
-            {process.env.NODE_ENV === 'development' && this.state.error && (
+            {process.env.NODE_ENV === "development" && this.state.error && (
               <details className="mb-6 text-left">
                 <summary className="cursor-pointer text-sm text-muted-foreground mb-2">
                   Detalhes do erro (Desenvolvimento)
@@ -98,7 +98,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <RefreshCw className="w-4 h-4" />
                 Tentar Novamente
               </Button>
-              
+
               <Button
                 onClick={this.handleReload}
                 variant="default"

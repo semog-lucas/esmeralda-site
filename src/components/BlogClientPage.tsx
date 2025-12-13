@@ -13,24 +13,7 @@ import { Newspaper, X, Filter, Search } from "lucide-react";
 import HeroPage from "@/components/HeroPage";
 
 import { POSTS_QUERY, CATEGORIES_QUERY } from "@/sanity/queries/postQueries";
-
-// Interface para Posts
-interface Post extends SanityDocument {
-  title: string;
-  slug: string;
-  categories?: { title: string; slug: { current: string } }[];
-  publishedAt: string;
-  mainImage?: any;
-  excerpt?: string;
-  author?: { name: string; image?: any };
-}
-
-// Interface para Categorias
-interface Category {
-  title: string;
-  slug: { current: string };
-  _id: string;
-}
+import { Post, Category } from "@/types/sanity";
 
 const POSTS_PER_PAGE = 9;
 

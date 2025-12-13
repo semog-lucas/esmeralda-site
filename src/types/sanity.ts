@@ -1,5 +1,4 @@
 import { PortableTextBlock } from "next-sanity";
-import { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 export interface SanityImage {
   _type: "image";
@@ -8,9 +7,8 @@ export interface SanityImage {
     _type: "reference";
   };
   alt?: string;
-  hotspot?: any;
-  crop?: any;
-  caption?: string;
+  hotspot?: unknown; 
+  crop?: unknown;
 }
 
 export interface Category {
@@ -28,7 +26,6 @@ export interface Author {
     linkedin?: string;
     instagram?: string;
     substack?: string;
-    website?: string;
   };
 }
 
@@ -50,7 +47,7 @@ export interface Project {
   slug: { current: string };
   publishedAt?: string;
   mainImage?: SanityImage | string;
-  categories?: Category[]; 
+  categories?: Category[];
   body?: PortableTextBlock[];
   linkDemo?: string;
   linkGithub?: string;
