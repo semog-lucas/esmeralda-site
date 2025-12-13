@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X, Filter, Search } from "lucide-react";
-import { Project, Category } from "@/types/sanity"; // Importação correta das interfaces
+import { Project, Category } from "@/types/sanity";
 
 const PROJECTS_PER_PAGE = 9;
 
@@ -25,7 +25,7 @@ export default function ProjectListFilter({
   const [displayedProjects, setDisplayedProjects] = useState<Project[]>([]);
 
   // Estados de controle
-  const [loading, setLoading] = useState(true);
+  // REMOVIDO: const [loading, setLoading] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -33,10 +33,6 @@ export default function ProjectListFilter({
   const [hasMore, setHasMore] = useState(true);
 
   const observer = useRef<IntersectionObserver | null>(null);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   // Lógica de Filtragem (Otimizada com useMemo)
   const filteredProjects = useMemo(() => {

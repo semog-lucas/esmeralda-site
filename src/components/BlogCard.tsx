@@ -83,7 +83,7 @@ export function BlogCard({
         {/* Categorias */}
         {showCategories && post.categories && post.categories.length > 0 && (
           <div className="flex flex-wrap gap-1 mb-3">
-            {post.categories.slice(0, 2).map((category, index) => (
+            {post.categories.slice(0, 2).map((category: Category, index) => (
               <Badge key={index} variant="secondary" className="text-xs">
                 {category.title}
               </Badge>
