@@ -18,10 +18,10 @@ const DottedGlowBackground = dynamic(
   }
 );
 
-interface JornadaItem {
-  title: string;
-  description: string;
-}
+// interface JornadaItem {
+//   title: string;
+//   description: string;
+// }
 
 export const Jornada = [
   {
@@ -92,11 +92,11 @@ function DottedGlowBackgroundDemoSecond() {
 }
 
 export function TimelineDemo() {
-  const [isMounted, setIsMounted] = useState(false);
+  // const [isMounted, setIsMounted] = useState(false);
 
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  // useEffect(() => {
+  //   setIsMounted(true);
+  // }, []);
 
   const data = [
     {
@@ -172,11 +172,11 @@ export function TimelineDemo() {
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400">
                       Minha motivação
                     </span>
-                    vai além do "gostar de programar". É sobre compreender como
-                    cada linha de código pode criar padrões significativos,
-                    transformar complexidade em clareza e construir sistemas que
-                    não apenas funcionam, mas que carregam propósito e
-                    significado.
+                    vai além do &quot;gostar de programar&quot;. É sobre
+                    compreender como cada linha de código pode criar padrões
+                    significativos, transformar complexidade em clareza e
+                    construir sistemas que não apenas funcionam, mas que
+                    carregam propósito e significado.
                   </p>
                 </div>
                 <div className="flex flex-col gap-4 sm:flex-row">

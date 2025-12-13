@@ -19,7 +19,9 @@ const components: PortableTextComponents = {
   },
   marks: {
     link: ({ value, children }) => {
-      const target = (value?.href || "").startsWith("http") ? "_blank" : undefined;
+      const target = (value?.href || "").startsWith("http")
+        ? "_blank"
+        : undefined;
       return (
         <Link
           href={value?.href || "#"}
@@ -51,6 +53,7 @@ const components: PortableTextComponents = {
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const PortableTextCustom = ({ value }: { value: any }) => (
   <PortableText value={value} components={components} />
 );

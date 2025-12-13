@@ -6,12 +6,17 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion,
-  useCdn: false,
+  useCdn: true,
+  stega: {
+    enabled: process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview', // Só habilita stega em preview
+  }
 })
 
 const builder = imageUrlBuilder(client)
 
-export const urlFor = (source: any) => {
+import { SanityImageSource } from '@sanity/image-url/lib/types/types'
+
+export const urlFor = (source: SanityImageSource) => {
   if (!source) return null
   return builder.image(source).auto('format').fit('max')
 }

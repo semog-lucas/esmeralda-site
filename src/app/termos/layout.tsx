@@ -2,17 +2,19 @@
 import type { Metadata } from "next";
 
 import {
-  SITE_NAME,
   SITE_URL,
   SITE_KEYWORDS,
   OPEN_GRAPH,
   TWITTER,
-  ROBOTS_CONFIG
+  ROBOTS_CONFIG,
 } from "../constants";
+
+// import { SITE_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Política de Privacidade | Esmeralda Company",
-  description: "Conheça nossa Política de Privacidade. Saiba como a Esmeralda Company protege seus dados, utiliza cookies e garante sua segurança online. Última atualização: 4 de Outubro de 2025.",
+  description:
+    "Conheça nossa Política de Privacidade. Saiba como a Esmeralda Company protege seus dados, utiliza cookies e garante sua segurança online. Última atualização: 4 de Outubro de 2025.",
   keywords: [
     "política de privacidade",
     "termos de uso",
@@ -24,12 +26,13 @@ export const metadata: Metadata = {
     "esmeralda company",
     "termos e condições",
     "proteção de dados pessoais",
-    ...SITE_KEYWORDS
+    ...SITE_KEYWORDS,
   ],
   openGraph: {
     ...OPEN_GRAPH,
     title: "Política de Privacidade | Esmeralda Company",
-    description: "Política de Privacidade da Esmeralda Company - Proteção de dados, cookies e segurança online.",
+    description:
+      "Política de Privacidade da Esmeralda Company - Proteção de dados, cookies e segurança online.",
     url: `${SITE_URL}/termos-e-condicoes`,
     images: [
       {
@@ -70,34 +73,35 @@ export default function TermsLayout({
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "Política de Privacidade - Esmeralda Company",
-            "description": "Política de Privacidade e Termos de Uso da Esmeralda Company",
-            "url": "https://esmeraldacompany.com.br/termos-e-condicoes",
-            "datePublished": "2025-10-04",
-            "dateModified": "2025-10-04",
-            "publisher": {
+            name: "Política de Privacidade - Esmeralda Company",
+            description:
+              "Política de Privacidade e Termos de Uso da Esmeralda Company",
+            url: "https://esmeraldacompany.com.br/termos-e-condicoes",
+            datePublished: "2025-10-04",
+            dateModified: "2025-10-04",
+            publisher: {
               "@type": "Organization",
-              "name": "Esmeralda Company",
-              "url": "https://esmeraldacompany.com.br",
-              "logo": {
+              name: "Esmeralda Company",
+              url: "https://esmeraldacompany.com.br",
+              logo: {
                 "@type": "ImageObject",
-                "url": "https://esmeraldacompany.com.br/Esmeralda-logo.png"
-              }
+                url: "https://esmeraldacompany.com.br/Esmeralda-logo.png",
+              },
             },
-            "mainEntityOfPage": {
+            mainEntityOfPage: {
               "@type": "WebPage",
-              "@id": "https://esmeraldacompany.com.br/termos-e-condicoes"
+              "@id": "https://esmeraldacompany.com.br/termos-e-condicoes",
             },
-            "about": {
+            about: {
               "@type": "Thing",
-              "name": "Política de Privacidade"
+              name: "Política de Privacidade",
             },
-            "isPartOf": {
+            isPartOf: {
               "@type": "WebSite",
-              "name": "Esmeralda Company",
-              "url": "https://esmeraldacompany.com.br"
-            }
-          })
+              name: "Esmeralda Company",
+              url: "https://esmeraldacompany.com.br",
+            },
+          }),
         }}
       />
       {children}

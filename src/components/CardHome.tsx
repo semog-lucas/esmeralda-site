@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { type SanityDocument } from "next-sanity";
+// import { type SanityDocument } from "next-sanity";
 import { client } from "@/lib/client";
 import { BlogCard } from "./BlogCard";
 import { PostsGridSkeleton } from "./Skeletons";

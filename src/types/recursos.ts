@@ -35,6 +35,7 @@ export interface Recurso {
   }
   ctaText: string
   ctaLink: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   content: any[]
   categories?: Array<{
     _id: string

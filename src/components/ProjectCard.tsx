@@ -2,12 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, BriefcaseIcon } from "lucide-react";
 
@@ -19,6 +14,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   // Função para obter a URL da imagem do Sanity
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getImageUrl = (image: any): string | null => {
     if (!image) return null;
 

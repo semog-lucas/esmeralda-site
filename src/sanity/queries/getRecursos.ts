@@ -33,7 +33,8 @@ export async function getRecursos() {
     
     
     return recursos || [];
-  } catch (error) {
+  } catch (err) {
+    console.error("Erro ao buscar recursos:", err);
     return [];
   }
 }
