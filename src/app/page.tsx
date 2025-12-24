@@ -13,6 +13,11 @@ export default async function HomePage() {
       </ParallaxHeader>
 
       <section className="w-full min-h-screen mt-20">
+        <div className="flex flex-col items-center justify-Center pl-4 mx-auto max-w-7xl mb-8">
+          <h2 className="text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
+            Em Destaque
+          </h2>
+        </div>
         <BentoGridSecondDemo />
         <CardHomeDemo />
       </section>

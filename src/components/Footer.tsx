@@ -1,13 +1,14 @@
 import { Separator } from "@/components/ui/separator";
-import {
-  DribbbleIcon,
-  GithubIcon,
-  TwitchIcon,
-  TwitterIcon,
-} from "lucide-react";
+import { GithubIcon, Linkedin, Instagram, Mail } from "lucide-react";
 import Link from "next/link";
 import Logo from "../../public/Esmeralda-logo.webp";
 import Image from "next/image";
+import {
+  GITHUB_URL,
+  LINKEDIN_URL,
+  INSTAGRAM_URL,
+  EMAIL,
+} from "@/app/constants";
 
 const footerLinks = [
   {
@@ -69,17 +70,33 @@ const Footer = () => {
           </span>
 
           <div className="flex items-center gap-4 text-muted-foreground">
-            <Link href="#" target="_blank" className="hover:text-foreground">
-              <TwitterIcon className="h-4 w-4" />
+            <Link
+              href={LINKEDIN_URL}
+              target="_blank"
+              className="hover:text-foreground"
+            >
+              <Linkedin className="h-4 w-4" />
             </Link>
-            <Link href="#" target="_blank" className="hover:text-foreground">
-              <DribbbleIcon className="h-4 w-4" />
+            <Link
+              href={INSTAGRAM_URL}
+              target="_blank"
+              className="hover:text-foreground"
+            >
+              <Instagram className="h-4 w-4" />
             </Link>
-            <Link href="#" target="_blank" className="hover:text-foreground">
-              <TwitchIcon className="h-4 w-4" />
-            </Link>
-            <Link href="#" target="_blank" className="hover:text-foreground">
+            <Link
+              href={GITHUB_URL}
+              target="_blank"
+              className="hover:text-foreground"
+            >
               <GithubIcon className="h-4 w-4" />
+            </Link>
+            <Link
+              href={EMAIL}
+              target="_blank"
+              className="hover:text-foreground"
+            >
+              <Mail className="h-4 w-4" />
             </Link>
           </div>
         </div>

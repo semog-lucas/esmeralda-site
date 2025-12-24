@@ -5,18 +5,20 @@ import { Newspaper, BriefcaseIcon, UserIcon, FolderCode } from "lucide-react";
 
 export function BentoGridSecondDemo() {
   return (
-    <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
-      {items.map((item, i) => (
-        <BentoGridItem
-          key={i}
-          title={item.title}
-          description={item.description}
-          header={item.header}
-          className={item.className}
-          href={item.href}
-        />
-      ))}
-    </BentoGrid>
+    <>
+      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
+        {items.map((item, i) => (
+          <BentoGridItem
+            key={i}
+            title={item.title}
+            description={item.description}
+            header={item.header}
+            className={item.className}
+            href={item.href}
+          />
+        ))}
+      </BentoGrid>
+    </>
   );
 }
 

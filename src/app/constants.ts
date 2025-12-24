@@ -10,8 +10,8 @@ export const SITE_PUBLISHER = "Esmeralda Company";
 // ===== MÍDIAS SOCIAIS E CONTATO =====
 export const SOCIAL_TWITTER = "@esmeralda_co"; // Usado para Twitter Card
 export const EMAIL = "contato@esmeraldacompany.com.br";
-export const GITHUB_URL = "https://github.com/esmeraldacompany";
-export const LINKEDIN_URL = "https://linkedin.com/company/esmeraldacompany";
+export const GITHUB_URL = "https://github.com/semog-lucas";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/lucas-cardoso-gomes/";
 export const INSTAGRAM_URL = "https://instagram.com/esmeralda.company";
 
 // ===== ASSETS PADRÃO (SEO) =====
