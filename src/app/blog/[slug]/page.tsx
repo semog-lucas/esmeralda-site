@@ -6,12 +6,22 @@ import { client } from "@/lib/client";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
-import { Calendar, User, ArrowLeft, Clock } from "lucide-react";
-import { Post, SanityImage } from "@/types/sanity";
+import { User, ArrowLeft, Clock } from "lucide-react";
+import { Post } from "@/types/sanity";
 import { constructMetadata } from "@/lib/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_URL, SITE_NAME, SITE_LOGO } from "@/app/constants";
 import { CustomPortableTextComponents } from "@/components/PortableTextComponents";
+
+// Interfaces para resolver o erro de "Unexpected any"
+interface PortableTextChild {
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type?: string;
+  children?: PortableTextChild[];
+}
 
 // Query do post principal para metadata
 const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -86,15 +96,17 @@ const RECENT_POSTS_QUERY = `*[
 }`;
 
 // ==========================================
-// FUNÇÃO AUXILIAR: Tempo de Leitura
+// FUNÇÃO AUXILIAR: Tempo de Leitura (Tipada)
 // ==========================================
-function estimateReadingTime(body: any[]): number {
+function estimateReadingTime(
+  body: PortableTextBlock[] | null | undefined,
+): number {
   if (!body || !Array.isArray(body)) return 1;
 
   let text = "";
   body.forEach((block) => {
     if (block.children) {
-      block.children.forEach((child: any) => {
+      block.children.forEach((child) => {
         if (child.text) {
           text += child.text + " ";
         }
@@ -152,43 +164,6 @@ export async function generateMetadata({
     keywords: post.categories?.map((c) => c.title),
   });
 }
-
-// ==========================================
-// CONFIGURAÇÃO DO PORTABLE TEXT
-// ==========================================
-const PortableTextComponents = {
-  types: {
-    image: ({ value }: { value: SanityImage }) => {
-      if (!value?.asset?._ref) return null;
-
-      const imageUrl = urlFor(value)
-        ?.width(800)
-        .height(600)
-        .fit("max")
-        .auto("format")
-        .url();
-
-      if (!imageUrl) return null;
-
-      return (
-        <div className="my-8 relative aspect-video max-w-4xl mx-auto">
-          <Image
-            src={imageUrl}
-            alt={value.alt || "Imagem do post"}
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
-            className="rounded-lg object-cover"
-          />
-          {value.caption && (
-            <p className="text-center text-sm text-muted-foreground mt-2">
-              {value.caption}
-            </p>
-          )}
-        </div>
-      );
-    },
-  },
-};
 
 // Componente assíncrono para posts relacionados
 async function RelatedPosts({ currentSlug }: { currentSlug: string }) {
@@ -255,7 +230,11 @@ export default async function PostPage({
     ? urlFor(post.mainImage)?.width(1200).height(600).url()
     : null;
 
-  const readTime = estimateReadingTime(post.body || []);
+  // Cast seguro para a função de tempo de leitura
+  // (Assumindo que post.body vem do Sanity compativel com PortableTextBlock)
+  const readTime = estimateReadingTime(
+    post.body as unknown as PortableTextBlock[],
+  );
 
   // 2. Criação do JSON-LD (Structured Data) para Artigo
   const jsonLd = {
@@ -315,7 +294,6 @@ export default async function PostPage({
             {post.title}
           </h1>
 
-          {/* --- ÁREA ALTERADA: TEMPO DE LEITURA E LINK DO AUTOR --- */}
           <div className="flex items-center gap-6 text-muted-foreground text-sm border-y border-border py-4">
             {/* 1. Minutos de Leitura */}
             <div className="flex items-center gap-2">

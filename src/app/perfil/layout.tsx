@@ -4,12 +4,23 @@ import { constructMetadata } from "@/lib/metadata";
 import { JsonLd } from "@/components/JsonLd";
 import { SITE_NAME, SITE_URL } from "@/app/constants";
 import { urlFor } from "@/lib/client";
+import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+
+// Interfaces para substituir o 'any'
+interface PortableTextChild {
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type?: string;
+  children?: PortableTextChild[];
+}
 
 // Definição da interface do Autor para TypeScript
 interface AuthorData {
   name: string;
-  bio?: any[];
-  image?: any;
+  bio?: PortableTextBlock[];
+  image?: SanityImageSource;
 }
 
 // Buscar dados do autor
@@ -35,7 +46,7 @@ export async function generateMetadata(): Promise<Metadata> {
     });
   }
 
-  // Extrair texto do PortableText de forma simples (primeiro bloco)
+  // Extrair texto do PortableText de forma segura
   const bioText =
     author.bio?.[0]?.children?.[0]?.text ||
     "Conheça o autor por trás do laboratório Esmeralda. Descubra minha jornada, projetos e paixão por tecnologia e inovação.";
@@ -71,12 +82,15 @@ export default async function PerfilLayout({
 }) {
   const author = await getAuthorData();
 
-  // Se não tiver autor, renderiza apenas o conteúdo (erro tratado na página ou metadata)
+  // Se não tiver autor, renderiza apenas o conteúdo
   if (!author) return <>{children}</>;
 
   const imageUrl = author.image
     ? urlFor(author.image)?.width(800).height(800).url()
     : `${SITE_URL}/perfil-lucas.webp`;
+
+  const bioDescription =
+    author.bio?.[0]?.children?.[0]?.text || "Desenvolvedor e Criador";
 
   // Schema.org para Página de Perfil Pessoal
   const jsonLd = {
@@ -85,8 +99,7 @@ export default async function PerfilLayout({
     mainEntity: {
       "@type": "Person",
       name: author.name,
-      description:
-        author.bio?.[0]?.children?.[0]?.text || "Desenvolvedor e Criador",
+      description: bioDescription,
       image: imageUrl,
       url: `${SITE_URL}/perfil`,
       worksFor: {

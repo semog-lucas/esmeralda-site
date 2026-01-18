@@ -6,7 +6,16 @@ import { urlFor } from "@/lib/client";
 import Image from "next/image";
 import { Post, Category } from "@/types/sanity";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
-import { Clock } from "lucide-react"; // Ícone opcional
+import { Clock } from "lucide-react";
+
+interface PortableTextChild {
+  text?: string;
+}
+
+interface PortableTextBlock {
+  _type?: string;
+  children?: PortableTextChild[];
+}
 
 interface BlogCardProps {
   post: Post;
@@ -14,18 +23,20 @@ interface BlogCardProps {
   showExcerpt?: boolean;
   showCategories?: boolean;
   showAuthor?: boolean;
-  showReadTime?: boolean; // Novo nome para a prop
+  showReadTime?: boolean;
   className?: string;
 }
 
-// Função auxiliar para calcular tempo de leitura
-function estimateReadingTime(body: any[]): number {
+// Função auxiliar tipada para calcular tempo de leitura
+function estimateReadingTime(
+  body: PortableTextBlock[] | null | undefined,
+): number {
   if (!body || !Array.isArray(body)) return 1;
 
   let text = "";
   body.forEach((block) => {
     if (block.children) {
-      block.children.forEach((child: any) => {
+      block.children.forEach((child) => {
         if (child.text) {
           text += child.text + " ";
         }
@@ -76,7 +87,11 @@ export function BlogCard({
 
   const imageUrl = getImageUrl(post.mainImage);
   const authorImageUrl = getAuthorImageUrl(post.author?.image);
-  const readTime = estimateReadingTime(post.body || []);
+
+  // Cast seguro para a função de tempo
+  const readTime = estimateReadingTime(
+    post.body as unknown as PortableTextBlock[],
+  );
 
   return (
     <Card
