@@ -20,10 +20,6 @@ const footerLinks = [
     href: "/contato",
   },
   {
-    title: "Newslatter",
-    href: "/newslatter",
-  },
-  {
     title: "Recursos",
     href: "/recursos",
   },

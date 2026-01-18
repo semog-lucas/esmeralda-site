@@ -1,3 +1,4 @@
+// app/page.tsx
 import HeroSection from "@/components/HeroSection";
 import ParallaxHeader from "@/components/ParallaxHeader";
 import SpotlightWrapper from "@/components/SpotlightWrapper";
@@ -12,8 +13,8 @@ export default async function HomePage() {
         <HeroSection />
       </ParallaxHeader>
 
-      <section className="w-full min-h-screen mt-20">
-        <div className="flex flex-col items-center justify-Center pl-4 mx-auto max-w-7xl mb-8">
+      <section id="destaque" className="w-full min-h-screen mt-15 scroll-mt-20">
+        <div className="flex flex-col items-center justify-center pl-4 mx-auto max-w-7xl mb-8">
           <h2 className="text-xl md:text-5xl font-bold text-neutral-800 dark:text-neutral-200 font-sans">
             Em Destaque
           </h2>

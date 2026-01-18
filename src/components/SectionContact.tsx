@@ -140,7 +140,6 @@ const SectionContact = () => {
                 rel="noopener noreferrer"
               >
                 Agendar uma Conversa
-                <span className="text-xs">↗</span>
               </Link>
             </div>
 

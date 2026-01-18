@@ -75,7 +75,7 @@ function HeroPerfil({ author }: HeroPerfilProps) {
       <header
         className="bg-gray-900 mb-50 relative bg-cover bg-center bg-no-repeat "
         style={{
-          backgroundImage: "url('/hero-perfil.jpg' )",
+          backgroundImage: "url('/hero-perfil.webp' )",
         }}
       >
         {/* Overlay escuro para melhor contraste do texto */}

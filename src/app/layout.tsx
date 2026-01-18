@@ -68,7 +68,6 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <ErrorBoundary>
-          {/* 3. Injeção do JSON-LD no Body */}
           <JsonLd data={jsonLd} />
 
           <NavbarDemo />

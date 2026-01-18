@@ -6,11 +6,12 @@ import { client } from "@/lib/client";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogCard } from "@/components/BlogCard";
-import { Calendar, User, ArrowLeft } from "lucide-react";
+import { Calendar, User, ArrowLeft, Clock } from "lucide-react";
 import { Post, SanityImage } from "@/types/sanity";
-import { constructMetadata } from "@/lib/metadata"; // Novo construtor
-import { JsonLd } from "@/components/JsonLd"; // Novo componente
-import { SITE_URL, SITE_NAME, SITE_LOGO } from "@/app/constants"; // Constantes
+import { constructMetadata } from "@/lib/metadata";
+import { JsonLd } from "@/components/JsonLd";
+import { SITE_URL, SITE_NAME, SITE_LOGO } from "@/app/constants";
+import { CustomPortableTextComponents } from "@/components/PortableTextComponents";
 
 // Query do post principal para metadata
 const POST_METADATA_QUERY = `*[_type == "post" && slug.current == $slug][0]{
@@ -83,6 +84,30 @@ const RECENT_POSTS_QUERY = `*[
     image
   }
 }`;
+
+// ==========================================
+// FUNÇÃO AUXILIAR: Tempo de Leitura
+// ==========================================
+function estimateReadingTime(body: any[]): number {
+  if (!body || !Array.isArray(body)) return 1;
+
+  let text = "";
+  body.forEach((block) => {
+    if (block.children) {
+      block.children.forEach((child: any) => {
+        if (child.text) {
+          text += child.text + " ";
+        }
+      });
+    }
+  });
+
+  const wordCount = text.trim().split(/\s+/).length;
+  const wordsPerMinute = 200;
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+
+  return minutes || 1;
+}
 
 const { projectId, dataset } = client.config();
 
@@ -230,6 +255,8 @@ export default async function PostPage({
     ? urlFor(post.mainImage)?.width(1200).height(600).url()
     : null;
 
+  const readTime = estimateReadingTime(post.body || []);
+
   // 2. Criação do JSON-LD (Structured Data) para Artigo
   const jsonLd = {
     "@context": "https://schema.org",
@@ -288,22 +315,23 @@ export default async function PostPage({
             {post.title}
           </h1>
 
+          {/* --- ÁREA ALTERADA: TEMPO DE LEITURA E LINK DO AUTOR --- */}
           <div className="flex items-center gap-6 text-muted-foreground text-sm border-y border-border py-4">
+            {/* 1. Minutos de Leitura */}
             <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4" />
-              <time dateTime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString("pt-BR", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </time>
+              <Clock className="w-4 h-4" />
+              <span>{readTime} min de leitura</span>
             </div>
+
+            {/* 2. Link do Autor */}
             {post.author && (
-              <div className="flex items-center gap-2">
+              <Link
+                href="/perfil"
+                className="flex items-center gap-2 hover:text-primary transition-colors"
+              >
                 <User className="w-4 h-4" />
                 <span>{post.author.name}</span>
-              </div>
+              </Link>
             )}
           </div>
         </header>
@@ -323,11 +351,11 @@ export default async function PostPage({
         )}
 
         {/* Conteúdo */}
-        <article className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-bold prose-a:text-primary hover:prose-a:text-primary/80 prose-img:rounded-xl">
+        <article className="max-w-none">
           {Array.isArray(post.body) && (
             <PortableText
               value={post.body}
-              components={PortableTextComponents}
+              components={CustomPortableTextComponents}
             />
           )}
         </article>

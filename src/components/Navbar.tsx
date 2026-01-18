@@ -1,5 +1,5 @@
 "use client";
-import * as motion from "motion/react-client";
+import { motion } from "framer-motion";
 import {
   Navbar,
   NavBody,
@@ -16,8 +16,9 @@ import { useState } from "react";
 
 export function NavbarDemo() {
   const navItems = [
+    { name: "Home", link: "/" },
     { name: "Blog", link: "/blog" },
-    { name: "Por Trás do Codigo", link: "/sobre" },
+    { name: "sobre", link: "/sobre" },
     { name: "Projetos", link: "/projetos" },
   ];
 
@@ -37,7 +38,7 @@ export function NavbarDemo() {
         <NavBody>
           <NavbarLogo />
           <NavItems items={navItems} />
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 pointer-events-auto z-50">
             <NavbarButton variant="secondary" href="/recursos">
               Recursos
             </NavbarButton>

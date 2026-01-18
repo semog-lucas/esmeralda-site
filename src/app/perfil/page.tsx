@@ -53,7 +53,7 @@ export default async function PagePerfil() {
                 showExcerpt={true}
                 showCategories={true}
                 showAuthor={false}
-                showDate={true}
+                showReadTime={true}
                 className="h-full"
               />
             ))}

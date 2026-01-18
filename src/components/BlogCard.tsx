@@ -6,6 +6,7 @@ import { urlFor } from "@/lib/client";
 import Image from "next/image";
 import { Post, Category } from "@/types/sanity";
 import { SanityImageSource } from "@sanity/image-url/lib/types/types";
+import { Clock } from "lucide-react"; // Ícone opcional
 
 interface BlogCardProps {
   post: Post;
@@ -13,8 +14,30 @@ interface BlogCardProps {
   showExcerpt?: boolean;
   showCategories?: boolean;
   showAuthor?: boolean;
-  showDate?: boolean;
+  showReadTime?: boolean; // Novo nome para a prop
   className?: string;
+}
+
+// Função auxiliar para calcular tempo de leitura
+function estimateReadingTime(body: any[]): number {
+  if (!body || !Array.isArray(body)) return 1;
+
+  let text = "";
+  body.forEach((block) => {
+    if (block.children) {
+      block.children.forEach((child: any) => {
+        if (child.text) {
+          text += child.text + " ";
+        }
+      });
+    }
+  });
+
+  const wordCount = text.trim().split(/\s+/).length;
+  const wordsPerMinute = 200; // Velocidade média
+  const minutes = Math.ceil(wordCount / wordsPerMinute);
+
+  return minutes || 1; // Mínimo de 1 minuto
 }
 
 export function BlogCard({
@@ -23,10 +46,9 @@ export function BlogCard({
   showExcerpt = true,
   showCategories = true,
   showAuthor = true,
-  showDate = true,
+  showReadTime = true, // Padrão true
   className = "",
 }: BlogCardProps) {
-  // Tipagem correta: source é SanityImageSource ou undefined
   const getImageUrl = (image: SanityImageSource | undefined) => {
     if (!image) return null;
     try {
@@ -54,6 +76,7 @@ export function BlogCard({
 
   const imageUrl = getImageUrl(post.mainImage);
   const authorImageUrl = getAuthorImageUrl(post.author?.image);
+  const readTime = estimateReadingTime(post.body || []);
 
   return (
     <Card
@@ -96,7 +119,6 @@ export function BlogCard({
           </div>
         )}
 
-        {/* Resto do componente mantém igual, pois 'post' agora está tipado */}
         <Link href={`/blog/${post.slug.current}`} className="flex-1">
           <h3 className="text-lg font-semibold tracking-tight line-clamp-2 hover:text-primary transition-colors mb-3">
             {post.title}
@@ -109,12 +131,16 @@ export function BlogCard({
           </p>
         )}
 
-        {(showAuthor || showDate) && (
+        {(showAuthor || showReadTime) && (
           <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
             {showAuthor && (
-              <div className="flex items-center gap-2">
+              // 1. Link para o perfil do autor
+              <Link
+                href="/perfil"
+                className="flex items-center gap-2 group/author hover:opacity-80 transition-opacity"
+              >
                 {authorImageUrl ? (
-                  <div className="size-8 rounded-full overflow-hidden">
+                  <div className="size-8 rounded-full overflow-hidden border border-border">
                     <Image
                       src={authorImageUrl}
                       alt={post.author?.name || "Autor"}
@@ -130,16 +156,18 @@ export function BlogCard({
                     </span>
                   </div>
                 )}
-                <span className="text-muted-foreground text-sm">
-                  {post.author?.name || "Esmeralda Team"}
+                <span className="text-muted-foreground text-sm font-medium group-hover/author:text-primary transition-colors">
+                  {post.author?.name || "Time Esmeralda"}
                 </span>
-              </div>
+              </Link>
             )}
 
-            {showDate && (
-              <span className="text-muted-foreground text-sm">
-                {new Date(post.publishedAt).toLocaleDateString("pt-BR")}
-              </span>
+            {/* 2. Tempo de Leitura */}
+            {showReadTime && (
+              <div className="flex items-center gap-1 text-muted-foreground text-xs font-medium bg-secondary/50 px-2 py-1 rounded-full">
+                <Clock className="w-3 h-3" />
+                <span>{readTime} min de leitura</span>
+              </div>
             )}
           </div>
         )}
