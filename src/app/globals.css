@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -43,45 +45,45 @@
 
 :root {
   --radius: 0.625rem;
-  
+
   /* CORES PERSONALIZADAS - DARK MODE */
-  --background: oklch(0.20 0.00 0);      /* Neutral Background */
-  --foreground: oklch(0.98 0.00 0);      /* Texto claro */
-  --card: oklch(0.25 0.00 0);            /* Cards um pouco mais claros */
-  --card-foreground: oklch(0.98 0.00 0);
-  --popover: oklch(0.25 0.00 0);
-  --popover-foreground: oklch(0.98 0.00 0);
-  --primary: oklch(69.588% 0.14907 162.508);       /* Primary - Verde/Azul */
-  --primary-foreground: oklch(0.98 0.00 0);
-  --secondary: oklch(0.43 0.09 167);     /* Secondary - Verde/Azul mais intenso */
-  --secondary-foreground: oklch(0.98 0.00 0);
-  --muted: oklch(0.30 0.00 0);           /* Muted - Cinza médio */
-  --muted-foreground: oklch(0.70 0.00 0);
-  --accent: oklch(0.35 0.00 0);          /* Accent - Cinza mais claro */
-  --accent-foreground: oklch(0.98 0.00 0);
-  --destructive: oklch(0.60 0.20 25);    /* Destructive - Vermelho */
-  --border: oklch(0.35 0.00 0);          /* Bordas */
-  --input: oklch(0.30 0.00 0);           /* Inputs */
-  --ring: oklch(0.6959 0.1491 162.48);          /* Ring - Cor do primary */
-  
+  --background: oklch(0.2 0 0); /* Neutral Background */
+  --foreground: oklch(0.98 0 0); /* Texto claro */
+  --card: oklch(0.25 0 0); /* Cards um pouco mais claros */
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.25 0 0);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(69.588% 0.14907 162.508); /* Primary - Verde/Azul */
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.43 0.09 167); /* Secondary - Verde/Azul mais intenso */
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.3 0 0); /* Muted - Cinza médio */
+  --muted-foreground: oklch(0.7 0 0);
+  --accent: oklch(0.35 0 0); /* Accent - Cinza mais claro */
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.6 0.2 25); /* Destructive - Vermelho */
+  --border: oklch(0.35 0 0); /* Bordas */
+  --input: oklch(0.3 0 0); /* Inputs */
+  --ring: oklch(0.6959 0.1491 162.48); /* Ring - Cor do primary */
+
   /* Cores dos gráficos (mantidas do original) */
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
-  
+
   /* Sidebar (se usar) */
-  --sidebar: oklch(0.25 0.00 0);
-  --sidebar-foreground: oklch(0.98 0.00 0);
+  --sidebar: oklch(0.25 0 0);
+  --sidebar-foreground: oklch(0.98 0 0);
   --sidebar-primary: oklch(0.6959 0.1491 162.48);
-  --sidebar-primary-foreground: oklch(0.98 0.00 0);
-  --sidebar-accent: oklch(0.35 0.00 0);
-  --sidebar-accent-foreground: oklch(0.98 0.00 0);
-  --sidebar-border: oklch(0.35 0.00 0);
+  --sidebar-primary-foreground: oklch(0.98 0 0);
+  --sidebar-accent: oklch(0.35 0 0);
+  --sidebar-accent-foreground: oklch(0.98 0 0);
+  --sidebar-border: oklch(0.35 0 0);
   --sidebar-ring: oklch(0.6959 0.1491 162.48);
   --gradient-start: oklch(0.6959 0.1491 162.48);
-    --gradient-end: oklch(0.43 0.09 167);
+  --gradient-end: oklch(0.43 0.09 167);
 }
 
 @layer base {
@@ -101,12 +103,12 @@ html {
 /* Seleção de texto com cor primary */
 ::selection {
   background: oklch(0.6959 0.1491 162.48);
-  color: oklch(0.98 0.00 0);
+  color: oklch(0.98 0 0);
 }
 
 ::-moz-selection {
   background: oklch(0.6959 0.1491 162.48);
-  color: oklch(0.98 0.00 0);
+  color: oklch(0.98 0 0);
 }
 
 /* Scrollbar personalizada */
@@ -115,7 +117,7 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: oklch(0.20 0.00 0);
+  background: oklch(0.2 0 0);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -159,7 +161,6 @@ html {
   animation-play-state: paused !important;
 }
 
-
 /* Garantir que a navbar não interfira */
 .fixed.top-0 {
   pointer-events: none; /* Permite cliques através da navbar */
@@ -182,7 +183,9 @@ html {
 @layer components {
   .prose-esmeralda p {
     line-height: 1.75; /* relaxed */
-    color: oklch(0.92 0 0); /* Off-white (neutral-200/300 approx) for reduced eye strain */
+    color: oklch(
+      0.92 0 0
+    ); /* Off-white (neutral-200/300 approx) for reduced eye strain */
   }
 
   .prose-esmeralda h1,
